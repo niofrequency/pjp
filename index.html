@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PJP | Premium Corporate Concierge & Catering</title>
+    
+    <!-- Typography: Plus Jakarta Sans for a friendly yet authoritative geometric feel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            /* Strict Palette: Deep Navy & Crisp White. ZERO WARM TONES. */
+            --navy-dark: #0F2942;
+            --navy-light: #1A3E61;
+            --white: #FFFFFF;
+            --bg-offwhite: #F8FAFC;     /* Very subtle cool tint for alternating sections */
+            --text-main: #0F2942;
+            --text-muted: #566D85;
+            
+            /* Shape Variables */
+            --radius-pill: 9999px;
+            --radius-card: 16px;
+            
+            /* Soft, Premium Shadows */
+            --shadow-subtle: 0 12px 32px rgba(15, 41, 66, 0.05);
+            --shadow-hover: 0 20px 48px rgba(15, 41, 66, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--text-main);
+            background-color: var(--white);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            color: var(--navy-dark);
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        /* --- IMAGES (Cool Tones) --- */
+        .img-premium {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Filter to remove warmth/oranges and enhance the immaculate cool tone */
+            filter: grayscale(40%) sepia(10%) hue-rotate(190deg) contrast(1.05) brightness(1.05);
+        }
+
+        /* --- BUTTONS (Pill Shaped) --- */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 36px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: var(--radius-pill); /* Pill shape */
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background-color: var(--navy-dark);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--navy-light);
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--navy-dark);
+            border-color: var(--navy-dark);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--navy-dark);
+            color: var(--white);
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: transparent;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            box-shadow: 0 4px 20px rgba(15, 41, 66, 0.04);
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--navy-dark);
+            letter-spacing: -1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text-main);
+        }
+
+        .nav-links a:hover {
+            color: var(--navy-light);
+            opacity: 0.8;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            padding: 180px 5% 100px;
+            display: flex;
+            align-items: center;
+            min-height: 90vh;
+            gap: 4rem;
+            background-color: var(--bg-offwhite);
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+        }
+
+        .hero-content {
+            flex: 1;
+            padding-right: 2rem;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            max-width: 90%;
+        }
+
+        .hero-image-wrap {
+            flex: 1.2;
+            position: relative;
+            height: 600px;
+            border-radius: var(--radius-card);
+            overflow: hidden;
+            box-shadow: var(--shadow-subtle);
+        }
+
+        /* --- INTRO / PREMIUM STATEMENT --- */
+        .statement {
+            padding: 8rem 5%;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .statement h2 {
+            font-size: 2.75rem;
+            font-weight: 500;
+            line-height: 1.4;
+            color: var(--navy-dark);
+        }
+
+        .statement h2 span {
+            font-weight: 800;
+        }
+
+        /* --- SERVICES GRID (Soft Cards) --- */
+        .services {
+            padding: 6rem 5% 10rem;
+            background-color: var(--white);
+        }
+
+        .services-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .services-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .services-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: var(--radius-card);
+            padding: 3rem 2.5rem;
+            box-shadow: var(--shadow-subtle);
+            transition: all 0.4s ease;
+            text-align: left;
+            border: 1px solid rgba(15, 41, 66, 0.03);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card-icon {
+            width: 64px;
+            height: 64px;
+            background-color: var(--bg-offwhite);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .card-icon svg {
+            width: 28px;
+            height: 28px;
+            fill: var(--navy-dark);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        .card-link {
+            font-weight: 700;
+            color: var(--navy-dark);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-link:hover {
+            gap: 0.75rem; /* subtle interaction */
+        }
+
+        /* --- IMMACULATE VISUAL GALLERY --- */
+        .gallery-section {
+            padding: 8rem 5%;
+            background-color: var(--bg-offwhite);
+            border-top-left-radius: 40px;
+            border-top-right-radius: 40px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .gallery-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .gallery-images .img-wrap {
+            border-radius: var(--radius-card);
+            overflow: hidden;
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .img-wrap-tall { height: 400px; }
+        .img-wrap-short { height: 300px; margin-top: 100px; }
+
+        .gallery-text h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .gallery-text p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            max-width: 90%;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--navy-dark);
+            color: var(--white);
+            padding: 6rem 5% 3rem;
+            border-top-left-radius: 40px;
+            border-top-right-radius: 40px;
+            margin-top: -40px; /* Overlap previous section slightly */
+            position: relative;
+            z-index: 10;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-brand .logo {
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .footer-brand p {
+            color: #A3B5C9;
+            max-width: 80%;
+        }
+
+        .footer-col h4 {
+            color: var(--white);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-col a {
+            display: block;
+            color: #A3B5C9;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .footer-col a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            color: #7A93AC;
+            font-size: 0.9rem;
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 1024px) {
+            .hero { flex-direction: column; text-align: center; padding-top: 140px; }
+            .hero-content { padding-right: 0; }
+            .hero-content p { margin: 0 auto 3rem; }
+            .hero-image-wrap { width: 100%; height: 500px; }
+            
+            .grid { grid-template-columns: repeat(2, 1fr); }
+            .gallery-grid { grid-template-columns: 1fr; }
+            .gallery-images .img-wrap-short { margin-top: 0; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero-content h1 { font-size: 3rem; }
+            .statement h2 { font-size: 2rem; }
+            .grid { grid-template-columns: 1fr; }
+            .gallery-images { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav id="navbar">
+        <div class="logo">PJP.</div>
+        <div class="nav-links">
+            <a href="#">Concierge Services</a>
+            <a href="#">The Experience</a>
+            <a href="#">Our Standards</a>
+            <a href="#">Locations</a>
+        </div>
+        <a href="#" class="btn btn-primary">Request Consultation</a>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1>Elevating the Standard of Remote Hospitality.</h1>
+            <p>We bring premium concierge, immaculate dining, and luxurious operational standards to the most remote enterprise locations in the region.</p>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <a href="#" class="btn btn-primary">Explore Our Services</a>
+                <a href="#" class="btn btn-outline">View Capabilities</a>
+            </div>
+        </div>
+        <div class="hero-image-wrap">
+            <img src="https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?q=80&w=1200&auto=format&fit=crop" alt="Immaculate Corporate Dining" class="img-premium">
+        </div>
+    </header>
+
+    <!-- PREMIUM STATEMENT -->
+    <section class="statement">
+        <h2>We believe that operating in a remote environment shouldn't mean compromising on <span>comfort, quality, or culinary excellence.</span></h2>
+    </section>
+
+    <!-- CONCIERGE SERVICES GRID -->
+    <section class="services">
+        <div class="services-header">
+            <h2>Premium Concierge Services</h2>
+            <p>Meticulously curated solutions for elite enterprise operations.</p>
+        </div>
+        
+        <div class="grid">
+            <!-- Service 1 -->
+            <div class="card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.88 3.75 3.99V22h2.5v-9.01C11.34 12.88 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"/></svg>
+                </div>
+                <h3>Executive Culinary Catering</h3>
+                <p>Five-star dining experiences curated by master chefs, utilizing the finest locally and globally sourced ingredients.</p>
+                <a href="#" class="card-link">Discover Dining &rarr;</a>
+            </div>
+
+            <!-- Service 2 -->
+            <div class="card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path d="M7 19h10V4H7v15zm-5-2h4V6H2v11zM18 6v11h4V6h-4z"/></svg>
+                </div>
+                <h3>Luxury Camp Management</h3>
+                <p>Complete operational oversight of living quarters, ensuring an immaculate, hotel-quality environment for your personnel.</p>
+                <a href="#" class="card-link">Discover Management &rarr;</a>
+            </div>
+
+            <!-- Service 3 -->
+            <div class="card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                </div>
+                <h3>Elite Manpower Placement</h3>
+                <p>Providing highly-trained, impeccably presented hospitality and technical staff to maintain operational excellence.</p>
+                <a href="#" class="card-link">Discover Personnel &rarr;</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- IMMACULATE VISUAL GALLERY -->
+    <section class="gallery-section">
+        <div class="gallery-grid">
+            <div class="gallery-images">
+                <div class="img-wrap img-wrap-tall">
+                    <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?q=80&w=800&auto=format&fit=crop" alt="Executive Chef" class="img-premium">
+                </div>
+                <div class="img-wrap img-wrap-short">
+                    <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=800&auto=format&fit=crop" alt="Concierge Service" class="img-premium">
+                </div>
+            </div>
+            <div class="gallery-text">
+                <h2>The Art of Flawless Execution.</h2>
+                <p>Our commitment to excellence is visible in every detail. From the spotless preparation surfaces of our kitchens to the refined presentation of our meals, we maintain an atmosphere of absolute precision and care.</p>
+                <p>We adhere to the highest international standards for hygiene and service, ensuring peace of mind for our enterprise partners.</p>
+                <br>
+                <a href="#" class="btn btn-primary">Read Our Standards</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <span class="logo">PJP.</span>
+                <p>Elevating remote living through premium culinary experiences and immaculate concierge management.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Concierge</h4>
+                <a href="#">Executive Catering</a>
+                <a href="#">In-Flight Services</a>
+                <a href="#">Camp Management</a>
+            </div>
+            <div class="footer-col">
+                <h4>The Company</h4>
+                <a href="#">Our Philosophy</a>
+                <a href="#">Quality Standards</a>
+                <a href="#">Careers</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Us</h4>
+                <a href="mailto:concierge@pjp.co.id">concierge@pjp.co.id</a>
+                <a href="tel:+6281100000000">+62 811 0000 0000</a>
+                <a href="#">Kuala Kencana, Papua</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>&copy; 2026 PT. Pengembangan Jaya Papua. All Rights Reserved.</div>
+            <div style="display: flex; gap: 2rem;">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVITY SCRIPT -->
+    <script>
+        // Smooth sticky navbar background transition
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

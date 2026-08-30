@@ -1,555 +1,343 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PJP | Premium Corporate Concierge & Catering</title>
-    
-    <!-- Typography: Plus Jakarta Sans for a friendly yet authoritative geometric feel -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <style>
-        /* --- CSS VARIABLES & RESET --- */
-        :root {
-            /* Strict Palette: Deep Navy & Crisp White. ZERO WARM TONES. */
-            --navy-dark: #0F2942;
-            --navy-light: #1A3E61;
-            --white: #FFFFFF;
-            --bg-offwhite: #F8FAFC;     /* Very subtle cool tint for alternating sections */
-            --text-main: #0F2942;
-            --text-muted: #566D85;
-            
-            /* Shape Variables */
-            --radius-pill: 9999px;
-            --radius-card: 16px;
-            
-            /* Soft, Premium Shadows */
-            --shadow-subtle: 0 12px 32px rgba(15, 41, 66, 0.05);
-            --shadow-hover: 0 20px 48px rgba(15, 41, 66, 0.1);
-        }
+  <meta charset="utf-8">
+  <title>PT. Pengembangan Jaya Papua | Catering, Camp &amp; Manpower Services</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta name="keywords" content="PJP, Pengembangan Jaya Papua, catering Papua, industrial catering, in-flight catering, labor supply Papua, manpower Papua, Timika catering">
+  <meta name="description" content="PT. Pengembangan Jaya Papua (PJP) delivers premium industrial catering, in-flight catering, event catering and skilled manpower supply to enterprise clients across Papua, Indonesia.">
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <!-- Favicon -->
+  <link href="img/icon/PJP Favicon.ico" rel="icon">
 
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            color: var(--text-main);
-            background-color: var(--white);
-            line-height: 1.7;
-            -webkit-font-smoothing: antialiased;
-        }
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-        h1, h2, h3, h4 {
-            font-weight: 700;
-            color: var(--navy-dark);
-            letter-spacing: -0.02em;
-            line-height: 1.15;
-        }
+  <!-- Site Stylesheet -->
+  <link href="css/design.css" rel="stylesheet">
 
-        a {
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.3s ease;
-        }
-
-        /* --- IMAGES (Cool Tones) --- */
-        .img-premium {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            /* Filter to remove warmth/oranges and enhance the immaculate cool tone */
-            filter: grayscale(40%) sepia(10%) hue-rotate(190deg) contrast(1.05) brightness(1.05);
-        }
-
-        /* --- BUTTONS (Pill Shaped) --- */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 16px 36px;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: var(--radius-pill); /* Pill shape */
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            text-align: center;
-            border: 2px solid transparent;
-        }
-
-        .btn-primary {
-            background-color: var(--navy-dark);
-            color: var(--white);
-        }
-
-        .btn-primary:hover {
-            background-color: var(--navy-light);
-            box-shadow: var(--shadow-hover);
-            transform: translateY(-2px);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            color: var(--navy-dark);
-            border-color: var(--navy-dark);
-        }
-
-        .btn-outline:hover {
-            background-color: var(--navy-dark);
-            color: var(--white);
-        }
-
-        /* --- NAVIGATION --- */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 1.5rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            background: transparent;
-            transition: all 0.3s ease;
-        }
-
-        nav.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 5%;
-            box-shadow: 0 4px 20px rgba(15, 41, 66, 0.04);
-        }
-
-        .logo {
-            font-size: 1.75rem;
-            font-weight: 800;
-            color: var(--navy-dark);
-            letter-spacing: -1px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            font-weight: 600;
-            font-size: 1rem;
-            color: var(--text-main);
-        }
-
-        .nav-links a:hover {
-            color: var(--navy-light);
-            opacity: 0.8;
-        }
-
-        /* --- HERO SECTION --- */
-        .hero {
-            padding: 180px 5% 100px;
-            display: flex;
-            align-items: center;
-            min-height: 90vh;
-            gap: 4rem;
-            background-color: var(--bg-offwhite);
-            border-bottom-left-radius: 40px;
-            border-bottom-right-radius: 40px;
-        }
-
-        .hero-content {
-            flex: 1;
-            padding-right: 2rem;
-        }
-
-        .hero-content h1 {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero-content p {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-            margin-bottom: 3rem;
-            max-width: 90%;
-        }
-
-        .hero-image-wrap {
-            flex: 1.2;
-            position: relative;
-            height: 600px;
-            border-radius: var(--radius-card);
-            overflow: hidden;
-            box-shadow: var(--shadow-subtle);
-        }
-
-        /* --- INTRO / PREMIUM STATEMENT --- */
-        .statement {
-            padding: 8rem 5%;
-            text-align: center;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .statement h2 {
-            font-size: 2.75rem;
-            font-weight: 500;
-            line-height: 1.4;
-            color: var(--navy-dark);
-        }
-
-        .statement h2 span {
-            font-weight: 800;
-        }
-
-        /* --- SERVICES GRID (Soft Cards) --- */
-        .services {
-            padding: 6rem 5% 10rem;
-            background-color: var(--white);
-        }
-
-        .services-header {
-            text-align: center;
-            margin-bottom: 5rem;
-        }
-
-        .services-header h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .services-header p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 3rem;
-        }
-
-        .card {
-            background: var(--white);
-            border-radius: var(--radius-card);
-            padding: 3rem 2.5rem;
-            box-shadow: var(--shadow-subtle);
-            transition: all 0.4s ease;
-            text-align: left;
-            border: 1px solid rgba(15, 41, 66, 0.03);
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .card-icon {
-            width: 64px;
-            height: 64px;
-            background-color: var(--bg-offwhite);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 2rem;
-        }
-
-        .card-icon svg {
-            width: 28px;
-            height: 28px;
-            fill: var(--navy-dark);
-        }
-
-        .card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .card p {
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-            font-size: 1rem;
-        }
-
-        .card-link {
-            font-weight: 700;
-            color: var(--navy-dark);
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .card-link:hover {
-            gap: 0.75rem; /* subtle interaction */
-        }
-
-        /* --- IMMACULATE VISUAL GALLERY --- */
-        .gallery-section {
-            padding: 8rem 5%;
-            background-color: var(--bg-offwhite);
-            border-top-left-radius: 40px;
-            border-top-right-radius: 40px;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .gallery-images {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-        }
-
-        .gallery-images .img-wrap {
-            border-radius: var(--radius-card);
-            overflow: hidden;
-            box-shadow: var(--shadow-subtle);
-        }
-
-        .img-wrap-tall { height: 400px; }
-        .img-wrap-short { height: 300px; margin-top: 100px; }
-
-        .gallery-text h2 {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .gallery-text p {
-            font-size: 1.15rem;
-            color: var(--text-muted);
-            margin-bottom: 2.5rem;
-            max-width: 90%;
-        }
-
-        /* --- FOOTER --- */
-        footer {
-            background-color: var(--navy-dark);
-            color: var(--white);
-            padding: 6rem 5% 3rem;
-            border-top-left-radius: 40px;
-            border-top-right-radius: 40px;
-            margin-top: -40px; /* Overlap previous section slightly */
-            position: relative;
-            z-index: 10;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 4rem;
-            margin-bottom: 4rem;
-        }
-
-        .footer-brand .logo {
-            color: var(--white);
-            margin-bottom: 1.5rem;
-            display: block;
-        }
-
-        .footer-brand p {
-            color: #A3B5C9;
-            max-width: 80%;
-        }
-
-        .footer-col h4 {
-            color: var(--white);
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-col a {
-            display: block;
-            color: #A3B5C9;
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
-        }
-
-        .footer-col a:hover {
-            color: var(--white);
-        }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 2rem;
-            display: flex;
-            justify-content: space-between;
-            color: #7A93AC;
-            font-size: 0.9rem;
-        }
-
-        /* --- RESPONSIVE DESIGN --- */
-        @media (max-width: 1024px) {
-            .hero { flex-direction: column; text-align: center; padding-top: 140px; }
-            .hero-content { padding-right: 0; }
-            .hero-content p { margin: 0 auto 3rem; }
-            .hero-image-wrap { width: 100%; height: 500px; }
-            
-            .grid { grid-template-columns: repeat(2, 1fr); }
-            .gallery-grid { grid-template-columns: 1fr; }
-            .gallery-images .img-wrap-short { margin-top: 0; }
-            .footer-grid { grid-template-columns: 1fr 1fr; }
-        }
-
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hero-content h1 { font-size: 3rem; }
-            .statement h2 { font-size: 2rem; }
-            .grid { grid-template-columns: 1fr; }
-            .gallery-images { grid-template-columns: 1fr; }
-            .footer-grid { grid-template-columns: 1fr; }
-        }
-    </style>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GMH01K43SG"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-GMH01K43SG');
+  </script>
 </head>
+
 <body>
 
-    <!-- NAVIGATION -->
-    <nav id="navbar">
-        <div class="logo">PJP.</div>
-        <div class="nav-links">
-            <a href="#">Concierge Services</a>
-            <a href="#">The Experience</a>
-            <a href="#">Our Standards</a>
-            <a href="#">Locations</a>
-        </div>
-        <a href="#" class="btn btn-primary">Request Consultation</a>
-    </nav>
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="container-row">
+      <div class="topbar-contact">
+        <a href="tel:+629013261089"><i class="fa-phone">☎</i> +62 901 326 1089</a>
+        <a href="mailto:marketing@pjp.co.id">✉ marketing@pjp.co.id</a>
+      </div>
+      <div class="topbar-links">
+        <a href="index.html">Home</a><span>/</span>
+        <a href="terms.html">Terms</a><span>/</span>
+        <a href="privacy.html">Privacy</a><span>/</span>
+        <a href="contact.html">Support</a>
+      </div>
+    </div>
+  </div>
 
-    <!-- HERO SECTION -->
-    <header class="hero">
-        <div class="hero-content">
-            <h1>Elevating the Standard of Remote Hospitality.</h1>
-            <p>We bring premium concierge, immaculate dining, and luxurious operational standards to the most remote enterprise locations in the region.</p>
-            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                <a href="#" class="btn btn-primary">Explore Our Services</a>
-                <a href="#" class="btn btn-outline">View Capabilities</a>
-            </div>
+  <!-- Navbar -->
+  <nav class="main-nav" id="navbar">
+    <a href="index.html" class="brand">
+      <img src="img/icon/PJP logo.png" alt="PT. Pengembangan Jaya Papua Logo">
+      PT. PJP
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html" class="active">Home</a>
+      <a href="nurdin.html">Blog</a>
+      <a href="about.html">About Us</a>
+      <a href="service.html">Our Services</a>
+      <a href="relations.html">Relations</a>
+      <a href="galleries.html">Galleries</a>
+      <a href="contact.html">Contact Us</a>
+      <div class="lang-dropdown">
+        <button class="lang-btn">Language ▾</button>
+        <div class="lang-menu">
+          <a href="index-indonesian.html">Bahasa Indonesia</a>
         </div>
-        <div class="hero-image-wrap">
-            <img src="https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?q=80&w=1200&auto=format&fit=crop" alt="Immaculate Corporate Dining" class="img-premium">
+      </div>
+    </div>
+    <div class="nav-cta">
+      <a href="contact.html" class="btn btn-primary btn-sm">Get A Quote</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <!-- Hero Carousel -->
+  <header class="hero">
+    <div class="hero-slide active">
+      <img src="img/chef main.JPG" alt="Kitchen staff of PT. Pengembangan Jaya Papua">
+      <div class="hero-content">
+        <span class="eyebrow">Since 2005 &middot; Papua, Indonesia</span>
+        <h1>Food Production Supplies &amp; Services</h1>
+        <p>Delicious cuisine tailored to your operation's needs, delivered with professionalism, hygiene, and attention to every detail &mdash; even in the most remote sites.</p>
+        <div class="hero-actions">
+          <a href="service.html" class="btn btn-light">Explore Our Services</a>
+          <a href="contact.html" class="btn btn-outline" style="border-color:#fff;color:#fff;">Get A Quote</a>
         </div>
-    </header>
-
-    <!-- PREMIUM STATEMENT -->
-    <section class="statement">
-        <h2>We believe that operating in a remote environment shouldn't mean compromising on <span>comfort, quality, or culinary excellence.</span></h2>
-    </section>
-
-    <!-- CONCIERGE SERVICES GRID -->
-    <section class="services">
-        <div class="services-header">
-            <h2>Premium Concierge Services</h2>
-            <p>Meticulously curated solutions for elite enterprise operations.</p>
+      </div>
+    </div>
+    <div class="hero-slide">
+      <img src="img/Labor--Supply.JPG" alt="Labor supply staff of PT. Pengembangan Jaya Papua">
+      <div class="hero-content">
+        <span class="eyebrow">968 Team Members Strong</span>
+        <h1>Papuan Manpower Development</h1>
+        <p>Reliable workforce solutions &mdash; providing skilled, trained, and dedicated workers who meet your business demands effectively and safely.</p>
+        <div class="hero-actions">
+          <a href="labor-supply.html" class="btn btn-light">Discover Manpower Services</a>
+          <a href="about.html" class="btn btn-outline" style="border-color:#fff;color:#fff;">About PJP</a>
         </div>
-        
-        <div class="grid">
-            <!-- Service 1 -->
-            <div class="card">
-                <div class="card-icon">
-                    <svg viewBox="0 0 24 24"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.88 3.75 3.99V22h2.5v-9.01C11.34 12.88 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"/></svg>
-                </div>
-                <h3>Executive Culinary Catering</h3>
-                <p>Five-star dining experiences curated by master chefs, utilizing the finest locally and globally sourced ingredients.</p>
-                <a href="#" class="card-link">Discover Dining &rarr;</a>
-            </div>
+      </div>
+    </div>
+    <div class="hero-dots">
+      <button class="active" aria-label="Slide 1"></button>
+      <button aria-label="Slide 2"></button>
+    </div>
+  </header>
 
-            <!-- Service 2 -->
-            <div class="card">
-                <div class="card-icon">
-                    <svg viewBox="0 0 24 24"><path d="M7 19h10V4H7v15zm-5-2h4V6H2v11zM18 6v11h4V6h-4z"/></svg>
-                </div>
-                <h3>Luxury Camp Management</h3>
-                <p>Complete operational oversight of living quarters, ensuring an immaculate, hotel-quality environment for your personnel.</p>
-                <a href="#" class="card-link">Discover Management &rarr;</a>
-            </div>
+  <!-- Contact Popup -->
+  <div id="contact-popup">
+    <a href="tel:+629013261089" aria-label="Call PJP"><i>📞</i></a>
+  </div>
 
-            <!-- Service 3 -->
-            <div class="card">
-                <div class="card-icon">
-                    <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-                </div>
-                <h3>Elite Manpower Placement</h3>
-                <p>Providing highly-trained, impeccably presented hospitality and technical staff to maintain operational excellence.</p>
-                <a href="#" class="card-link">Discover Personnel &rarr;</a>
-            </div>
+  <!-- Statement -->
+  <section class="statement">
+    <h2>To be the <span>big catering business company</span> on a national scale &mdash; competitive, reliable, and dedicated to customer satisfaction.</h2>
+  </section>
+
+  <!-- About / Video -->
+  <div class="container" style="padding-bottom: 5rem;">
+    <div style="border-radius: var(--radius-lg); overflow:hidden; box-shadow: var(--shadow-subtle); max-width: 900px; margin: 0 auto;">
+      <video controls playsinline style="width:100%; display:block; background:#000;" poster="img/chef main.JPG">
+        <source src="img/PJPIntroVid.MOV" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div>
+      <div class="stat-num" data-count="18">0</div>
+      <div class="stat-label">Years in Service</div>
+    </div>
+    <div>
+      <div class="stat-num" data-count="968">0</div>
+      <div class="stat-label">Team Members</div>
+    </div>
+    <div>
+      <div class="stat-num" data-count="4000">0</div>
+      <div class="stat-label">Meals Per Serving</div>
+    </div>
+    <div>
+      <div class="stat-num" data-count="12000">0</div>
+      <div class="stat-label">Meals Per Day</div>
+    </div>
+  </div>
+
+  <!-- Services -->
+  <section class="section-pad">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">What We Do</span>
+        <h2>Premium Concierge &amp; Manpower Services</h2>
+        <p>Meticulously managed solutions for enterprise operations in Papua's most demanding remote sites.</p>
+      </div>
+      <div class="grid grid-4">
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.88 3.75 3.99V22h2.5v-9.01C11.34 12.88 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"/></svg></div>
+          <h3>Food Production &amp; Catering</h3>
+          <p>Full-scale industrial catering with strict hygiene, halal, and nutrition standards for camps and job sites.</p>
+          <a href="industrial-catering.html" class="card-link">Learn More &rarr;</a>
         </div>
-    </section>
-
-    <!-- IMMACULATE VISUAL GALLERY -->
-    <section class="gallery-section">
-        <div class="gallery-grid">
-            <div class="gallery-images">
-                <div class="img-wrap img-wrap-tall">
-                    <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?q=80&w=800&auto=format&fit=crop" alt="Executive Chef" class="img-premium">
-                </div>
-                <div class="img-wrap img-wrap-short">
-                    <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=800&auto=format&fit=crop" alt="Concierge Service" class="img-premium">
-                </div>
-            </div>
-            <div class="gallery-text">
-                <h2>The Art of Flawless Execution.</h2>
-                <p>Our commitment to excellence is visible in every detail. From the spotless preparation surfaces of our kitchens to the refined presentation of our meals, we maintain an atmosphere of absolute precision and care.</p>
-                <p>We adhere to the highest international standards for hygiene and service, ensuring peace of mind for our enterprise partners.</p>
-                <br>
-                <a href="#" class="btn btn-primary">Read Our Standards</a>
-            </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M22 16v-2l-8.5-5V3.5c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5V9L2 14v2l8.5-2.5V19L8 20.5V22l4-1 4 1v-1.5L13.5 19v-5.5L22 16z"/></svg></div>
+          <h3>In-Flight Catering</h3>
+          <p>Precision-prepared, audited in-flight meals delivered on schedule for aviation partners operating in remote Papua.</p>
+          <a href="in-flight-catering.html" class="card-link">Learn More &rarr;</a>
         </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer>
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <span class="logo">PJP.</span>
-                <p>Elevating remote living through premium culinary experiences and immaculate concierge management.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Concierge</h4>
-                <a href="#">Executive Catering</a>
-                <a href="#">In-Flight Services</a>
-                <a href="#">Camp Management</a>
-            </div>
-            <div class="footer-col">
-                <h4>The Company</h4>
-                <a href="#">Our Philosophy</a>
-                <a href="#">Quality Standards</a>
-                <a href="#">Careers</a>
-            </div>
-            <div class="footer-col">
-                <h4>Contact Us</h4>
-                <a href="mailto:concierge@pjp.co.id">concierge@pjp.co.id</a>
-                <a href="tel:+6281100000000">+62 811 0000 0000</a>
-                <a href="#">Kuala Kencana, Papua</a>
-            </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg></div>
+          <h3>Event Catering</h3>
+          <p>Corporate gatherings, celebrations, and community events served with polish and hospitality.</p>
+          <a href="event-catering.html" class="card-link">Learn More &rarr;</a>
         </div>
-        <div class="footer-bottom">
-            <div>&copy; 2026 PT. Pengembangan Jaya Papua. All Rights Reserved.</div>
-            <div style="display: flex; gap: 2rem;">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-            </div>
+        <div class="card">
+          <div class="card-icon"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></div>
+          <h3>Papuan Manpower Development</h3>
+          <p>Trained, reliable local and national workforce placement &mdash; building skills and creating opportunity.</p>
+          <a href="labor-supply.html" class="card-link">Learn More &rarr;</a>
         </div>
-    </footer>
+      </div>
+    </div>
+  </section>
 
-    <!-- INTERACTIVITY SCRIPT -->
-    <script>
-        // Smooth sticky navbar background transition
-        const navbar = document.getElementById('navbar');
-        
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-    </script>
+  <!-- Visual Gallery Split -->
+  <section class="gallery-section">
+    <div class="container gallery-split">
+      <div class="gallery-images">
+        <div class="img-wrap img-wrap-tall"><img src="img/chef 3.jpg" alt="PJP chef preparing food" class="img-premium"></div>
+        <div class="img-wrap img-wrap-short"><img src="img/PJP-ISO.JPG" alt="PJP ISO certified operations" class="img-premium"></div>
+      </div>
+      <div class="gallery-text">
+        <span class="eyebrow">The PJP Standard</span>
+        <h2>The Art of Flawless Execution.</h2>
+        <p>Our commitment to excellence is visible in every detail &mdash; from spotless kitchen preparation surfaces to the refined presentation of every meal we serve.</p>
+        <p>We adhere to internationally recognised hygiene, safety and quality standards (ISO-certified), giving our enterprise partners complete peace of mind.</p>
+        <a href="about.html" class="btn btn-primary">Read Our Standards</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest News -->
+  <section class="section-pad news-block">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Newsroom</span>
+        <h2>Latest News</h2>
+        <p>Stories from our kitchens, camps, and communities across Papua.</p>
+      </div>
+      <div class="news-scroll">
+        <div class="media-card"><div class="thumb"><img src="img/nurdin19.jpg" alt="Nurdin's Farewell"></div><div class="body"><span class="tag">Community</span><h3>Nurdin's Farewell</h3><a href="nurdin.html" class="card-link">Read Story &rarr;</a></div></div>
+        <div class="media-card"><div class="thumb"><img src="img/fire01.jpg" alt="Fire safety training"></div><div class="body"><span class="tag">Safety</span><h3>Fire Safety</h3><a href="fire.html" class="card-link">Read Story &rarr;</a></div></div>
+        <div class="media-card"><div class="thumb"><img src="img/christmas3.JPG" alt="Christmas celebration"></div><div class="body"><span class="tag">Culture</span><h3>Christmas</h3><a href="christmas.html" class="card-link">Read Story &rarr;</a></div></div>
+        <div class="media-card"><div class="thumb"><img src="img/jobfair-7.jpeg" alt="Job fair"></div><div class="body"><span class="tag">Careers</span><h3>Job Fair</h3><a href="job-fair.html" class="card-link">Read Story &rarr;</a></div></div>
+        <div class="media-card"><div class="thumb"><img src="img/airfast-audit.jpeg" alt="Airfast in-flight audit"></div><div class="body"><span class="tag">Aviation</span><h3>Airfast Audit</h3><a href="in-flight-audit.html" class="card-link">Read Story &rarr;</a></div></div>
+        <div class="media-card"><div class="thumb"><img src="img/7mosez.jpg" alt="Mozes Kilangin airport food check"></div><div class="body"><span class="tag">Safety</span><h3>Mozes Airport Food Check</h3><a href="airport-security.html" class="card-link">Read Story &rarr;</a></div></div>
+        <div class="media-card"><div class="thumb"><img src="gallery/gedung PJK3 thumbnail.JPG" alt="JPP new training center"></div><div class="body"><span class="tag">Facilities</span><h3>JPP New Training Center</h3><a href="gedungJPP.html" class="card-link">Read Story &rarr;</a></div></div>
+        <div class="media-card"><div class="thumb"><img src="img/futsal9-thumbnail.JPG" alt="PJP futsal club"></div><div class="body"><span class="tag">Community</span><h3>PJP Futsal Club</h3><a href="futsal.html" class="card-link">Read Story &rarr;</a></div></div>
+        <div class="media-card"><div class="thumb"><img src="img/papuan manpower thumbnail.JPG" alt="Papuan job opportunity"></div><div class="body"><span class="tag">Careers</span><h3>Papuan Job Opportunity</h3><a href="papuan-manpower-development.html" class="card-link">Read Story &rarr;</a></div></div>
+        <div class="media-card"><div class="thumb"><img src="img/thumbnail-iso.png" alt="ISO certifications"></div><div class="body"><span class="tag">Quality</span><h3>ISO Certifications</h3><a href="iso-certifications.html" class="card-link">Read Story &rarr;</a></div></div>
+        <div class="media-card"><div class="thumb"><img src="img/thumbnail-indpendence.png" alt="Independence Day festival"></div><div class="body"><span class="tag">Culture</span><h3>Independence Day</h3><a href="festival.html" class="card-link">Read Story &rarr;</a></div></div>
+        <div class="media-card"><div class="thumb"><img src="img/thumbnail-freeportvisit.png" alt="Freeport inspection"></div><div class="body"><span class="tag">Compliance</span><h3>Freeport Inspection</h3><a href="freeport-inspection.html" class="card-link">Read Story &rarr;</a></div></div>
+        <div class="media-card"><div class="thumb"><img src="img/PJP 18 Juli Apresiasi 6.png" alt="Social security program appreciation"></div><div class="body"><span class="tag">Welfare</span><h3>Social Security Program</h3><a href="program-jaminan-sosial.html" class="card-link">Read Story &rarr;</a></div></div>
+        <div class="media-card"><div class="thumb"><img src="img/fv2.jpg" alt="Freeport's visit"></div><div class="body"><span class="tag">Relations</span><h3>Freeport's Visit</h3><a href="blog.html" class="card-link">Read Story &rarr;</a></div></div>
+        <div class="media-card"><div class="thumb"><img src="img/ind-5.png" alt="Food production"></div><div class="body"><span class="tag">Operations</span><h3>Food Production</h3><a href="industrial-catering.html" class="card-link">Read Story &rarr;</a></div></div>
+        <div class="media-card"><div class="thumb"><img src="img/inflight.JPG" alt="In-flight catering"></div><div class="body"><span class="tag">Aviation</span><h3>In-Flight Catering</h3><a href="in-flight-catering.html" class="card-link">Read Story &rarr;</a></div></div>
+        <div class="media-card"><div class="thumb"><img src="img/event catering1.png" alt="Event catering"></div><div class="body"><span class="tag">Events</span><h3>Event Catering</h3><a href="event-catering.html" class="card-link">Read Story &rarr;</a></div></div>
+        <div class="media-card"><div class="thumb"><img src="gallery/labsup6.JPG" alt="Papuan development"></div><div class="body"><span class="tag">Careers</span><h3>Papuan Development</h3><a href="labor-supply.html" class="card-link">Read Story &rarr;</a></div></div>
+      </div>
+      <div class="news-controls">
+        <button class="news-prev" aria-label="Previous">&larr;</button>
+        <button class="news-next" aria-label="Next">&rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quote / CTA -->
+  <section class="quote-split">
+    <div class="quote-text">
+      <span class="eyebrow">For Individuals &amp; Organizations</span>
+      <h2>Need Assistance Or Have Questions?</h2>
+      <p>Our team is here to help. Reach out with any query and we'll gladly provide the support you need &mdash; or request a free quote below.</p>
+      <a href="contact.html" class="btn btn-light" style="width:fit-content;">More Details</a>
+    </div>
+    <div class="quote-form-wrap">
+      <form class="quote-form" data-quote-form>
+        <div class="field-row">
+          <div class="field"><label for="gname">Your Name</label><input type="text" id="gname" name="Name" placeholder="Your full name"></div>
+          <div class="field"><label for="gmail">Your Email</label><input type="email" id="gmail" name="Email" placeholder="you@company.com"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label for="cname">Your Number</label><input type="text" id="cname" name="Phone" placeholder="+62 ..."></div>
+          <div class="field"><label for="cage">Service Type</label><input type="text" id="cage" name="Service" placeholder="e.g. Industrial Catering"></div>
+        </div>
+        <div class="field"><label for="message">Message</label><textarea id="message" name="Message" rows="3" placeholder="Tell us about your needs"></textarea></div>
+        <button type="submit" class="btn btn-primary btn-block">Get A Free Quote</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Clients -->
+  <section class="section-pad">
+    <div class="container">
+      <div class="section-header"><h2>Our Clients</h2></div>
+      <div class="clients-strip">
+        <a href="https://ptfi.co.id/"><img src="img/c1-FreeportIndo.png" alt="Freeport Indonesia"></a>
+        <a href="https://petrosea.com/id/"><img src="img/c2-Petro.png" alt="Petrosea"></a>
+        <a href="https://www.garuda-indonesia.com/id/id/index"><img src="img/c3-GarudaIndonesia.png" alt="Garuda Indonesia"></a>
+        <a href="https://www.airfastindonesia.com/"><img src="img/c4-Airfast.png" alt="Airfast Indonesia"></a>
+        <a href="https://www.sriwijayaair.co.id/"><img src="img/c6-Sriwijaya.png" alt="Sriwijaya Air"></a>
+        <a href="https://www.internationalsos.co.id/"><img src="img/international sos logo - 3.png" alt="International SOS"></a>
+        <a href="https://trakindo.co.id/"><img src="img/c5-Trakindo.png" alt="Trakindo"></a>
+        <a href="https://www.home.sandvik/en/"><img src="img/c7-Sandvik.png" alt="Sandvik"></a>
+        <a href="https://www.leightonasia.com/"><img src="img/c8-Leighton.png" alt="Leighton"></a>
+        <a href="https://ecc.co.id/company/site/view/693"><img src="img/utrlogo.png" alt="Universal Tekno Reksajaya"></a>
+        <a href="https://www.unitedtractors.com/en/"><img src="img/unitedtractorlogo-1.png" alt="United Tractors"></a>
+        <a href="https://ptmitrasiaga.com/"><img src="img/mitralogo.png" alt="Mitra Siaga"></a>
+        <a href="https://batikair.com/en/"><img src="img/Batik Logo.png" alt="Batik Air"></a>
+        <a href="https://aspindo-imsa.or.id/?wpbdp_listing=eksplorasi-nusa-jaya-pt"><img src="img/PT. Explorasi Nusa Jaya Logo.png" alt="Explorasi Nusa Jaya"></a>
+        <a href="https://ptfi.co.id/site/uploads/images/5bbef2ece92c9-5459c52ae9c09-fromwilltoskill-ina.pdf"><img src="img/Nemangkawi Logo.png" alt="Nemangkawi"></a>
+        <a href="https://ypj.sch.id/"><img src="img/YPJ Logo - 2.png" alt="Yayasan Pendidikan Jayawijaya"></a>
+        <a href="http://www.pum-mitra.com/"><img src="img/Papua Utama Mitra -3.png" alt="Papua Utama Mitra"></a>
+        <a href="https://chakrajawara.co.id/"><img src="img/Iveco Logo - 2.png" alt="Iveco Chakra Jawara"></a>
+      </div>
+      <p class="text-center" style="margin-top:2rem;"><a href="relations.html" class="card-link" style="justify-content:center;">See All Client Relations &rarr;</a></p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="brand"><img src="img/icon/PJP logo.png" alt="PJP logo">Pengembangan Jaya Papua</span>
+        <p><em>"To be the big catering business company on a national scale, competitive, reliable in carrying out requests, desires and expectations to achieve customer satisfaction."</em></p>
+        <div class="footer-newsletter">
+          <form action="newsletter.php" method="POST">
+            <input name="email" type="email" placeholder="Your email" required>
+            <button type="submit">Sign Up</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Get In Touch</h4>
+        <p>📍 Jl. Cendrawasih-SP3 Karang Senang, Distrik Kuala Kencana, Papua 99968</p>
+        <p>📞 +62 901 326 1089</p>
+        <p>✉️ marketing@pjp.co.id</p>
+      </div>
+      <div class="footer-col">
+        <h4>Our Services</h4>
+        <a href="industrial-catering.html">Food Production &amp; Catering</a>
+        <a href="in-flight-catering.html">In-Flight Catering</a>
+        <a href="event-catering.html">Event Catering</a>
+        <a href="labor-supply.html">Papuan Manpower Development</a>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="service.html">Our Services</a>
+        <a href="terms.html">Terms &amp; Condition</a>
+        <div class="social-row" style="margin-top:1.25rem;">
+          <a href="https://www.tiktok.com/@pjp_timika" aria-label="TikTok">🎵</a>
+          <a href="https://web.facebook.com/people/Pengembangan-Jaya-Papua/pfbid0RxkqtmRfekScsiSTLCp7HpqcV9NhUag1waWGqdRMzGtbGsHSi4RsVpccSyjcG9FVl/" aria-label="Facebook">f</a>
+          <a href="https://www.instagram.com/pt.pjpcatering/" aria-label="Instagram">📷</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>&copy; 2026 <a href="index.html">PT. Pengembangan Jaya Papua</a>. All Rights Reserved.</div>
+      <div class="links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" aria-label="Back to top">&uarr;</button>
+
+  <script src="js/main.js"></script>
 </body>
+
 </html>

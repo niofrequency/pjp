@@ -1,0 +1,89 @@
+/* ===========================================================
+   PJP Admin — layout on top of the site's css/design.css tokens
+   =========================================================== */
+
+body.admin-body { background: var(--bg-offwhite); }
+
+.admin-shell { display: flex; min-height: 100vh; }
+
+.admin-sidebar {
+  width: 240px; flex-shrink: 0; background: var(--navy-dark); color: var(--white);
+  display: flex; flex-direction: column; padding: 1.75rem 1.25rem; position: sticky; top: 0; height: 100vh;
+}
+.admin-sidebar-brand { display: flex; align-items: center; gap: 0.6rem; font-weight: 800; font-size: 1.1rem; margin-bottom: 2.5rem; }
+.admin-sidebar-brand img { height: 32px; }
+.admin-nav-list { display: flex; flex-direction: column; gap: 0.25rem; flex: 1; }
+.admin-nav-list a { padding: 0.75rem 0.9rem; border-radius: 10px; color: rgba(255,255,255,0.75); font-weight: 600; font-size: 0.95rem; }
+.admin-nav-list a:hover { background: rgba(255,255,255,0.06); color: var(--white); }
+.admin-nav-list a.active { background: rgba(255,255,255,0.12); color: var(--white); }
+.admin-sidebar-footer { border-top: 1px solid rgba(255,255,255,0.12); padding-top: 1.25rem; margin-top: 1.25rem; }
+.admin-user { font-size: 0.85rem; color: rgba(255,255,255,0.65); margin-bottom: 0.9rem; }
+.admin-sidebar-footer .btn-outline { border-color: rgba(255,255,255,0.3); color: var(--white); }
+.admin-sidebar-footer .btn-outline:hover { background: var(--white); color: var(--navy-dark); }
+.admin-view-site { display: block; text-align: center; margin-top: 0.9rem; font-size: 0.85rem; color: rgba(255,255,255,0.6); }
+.admin-view-site:hover { color: var(--white); }
+
+.admin-main { flex: 1; padding: 2.5rem 3rem; max-width: 1100px; }
+.admin-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
+.admin-header-row h1 { font-size: 1.75rem; margin: 0; }
+.admin-header-row p { color: var(--text-muted); margin: 0.3rem 0 0; }
+
+.admin-stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2.5rem; }
+.admin-stat-card { background: var(--white); border-radius: var(--radius-card); padding: 1.75rem; box-shadow: var(--shadow-subtle); border: 1px solid var(--border-soft); }
+.admin-stat-card .num { font-size: 2.25rem; font-weight: 800; color: var(--navy-dark); }
+.admin-stat-card .label { color: var(--text-muted); font-weight: 600; font-size: 0.9rem; }
+
+.admin-card { background: var(--white); border-radius: var(--radius-card); padding: 2rem; box-shadow: var(--shadow-subtle); border: 1px solid var(--border-soft); }
+
+table.admin-table { width: 100%; border-collapse: collapse; background: var(--white); border-radius: var(--radius-card); overflow: hidden; box-shadow: var(--shadow-subtle); }
+table.admin-table th, table.admin-table td { text-align: left; padding: 0.9rem 1.1rem; border-bottom: 1px solid var(--border-soft); font-size: 0.92rem; vertical-align: top; }
+table.admin-table th { background: var(--bg-offwhite); font-weight: 700; color: var(--navy-dark); }
+table.admin-table tr:last-child td { border-bottom: none; }
+table.admin-table tr.is-unread { background: #FBF6EE; }
+.admin-table .muted { color: var(--text-muted); font-size: 0.85rem; }
+.admin-table-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+.admin-badge { display: inline-block; padding: 0.2rem 0.65rem; border-radius: var(--radius-pill); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; }
+.admin-badge-published { background: #DFF5E1; color: #1E7A34; }
+.admin-badge-draft { background: #F0F0F0; color: #666; }
+.admin-badge-scheduled { background: #FFF3D6; color: #8A6100; }
+.admin-badge-expired { background: #FCE4E4; color: #A32626; }
+.admin-badge-active { background: #DFF5E1; color: #1E7A34; }
+.admin-badge-inactive { background: #F0F0F0; color: #666; }
+
+.admin-alert { padding: 0.9rem 1.25rem; border-radius: 12px; margin-bottom: 1.5rem; font-size: 0.92rem; font-weight: 600; }
+.admin-alert-success { background: #DFF5E1; color: #1E7A34; }
+.admin-alert-error { background: #FCE4E4; color: #A32626; }
+.admin-alert-info { background: #E4EEFB; color: #1F4E8C; }
+
+.admin-empty { text-align: center; padding: 4rem 2rem; color: var(--text-muted); }
+
+.admin-btn-row { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+
+.admin-form .field-row-3 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 700px) { .admin-form .field-row-3 { grid-template-columns: 1fr; } }
+.admin-form textarea { min-height: 220px; font-family: inherit; }
+.admin-form .hint { color: var(--text-muted); font-size: 0.82rem; margin-top: -0.9rem; margin-bottom: 1.1rem; }
+.admin-quickpick { display: flex; gap: 0.5rem; margin-top: 0.5rem; flex-wrap: wrap; }
+.admin-quickpick button { padding: 0.35rem 0.85rem; border-radius: var(--radius-pill); border: 1.5px solid var(--border-soft); background: var(--white); font-size: 0.8rem; font-weight: 600; cursor: pointer; color: var(--text-muted); }
+.admin-quickpick button:hover { border-color: var(--navy-dark); color: var(--navy-dark); }
+
+/* --- Login / setup screens --- */
+body.admin-auth-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--navy-dark); }
+.admin-auth-card { width: 100%; max-width: 400px; background: var(--white); border-radius: var(--radius-lg); padding: 2.75rem 2.25rem; box-shadow: var(--shadow-hover); }
+.admin-auth-brand { display: flex; align-items: center; gap: 0.6rem; font-weight: 800; margin-bottom: 1.5rem; }
+.admin-auth-brand img { height: 32px; }
+.admin-auth-card h1 { font-size: 1.5rem; margin-bottom: 1.5rem; }
+.admin-auth-sub { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+.admin-auth-back { text-align: center; margin-top: 1.5rem; font-size: 0.88rem; }
+
+@media (max-width: 900px) {
+  .admin-shell { flex-direction: column; }
+  .admin-sidebar { width: 100%; height: auto; position: static; flex-direction: row; align-items: center; flex-wrap: wrap; }
+  .admin-sidebar-brand { margin-bottom: 0; margin-right: auto; }
+  .admin-nav-list { flex-direction: row; flex-wrap: wrap; }
+  .admin-sidebar-footer { border-top: none; margin-top: 0; padding-top: 0; display: flex; align-items: center; gap: 0.75rem; }
+  .admin-user { display: none; }
+  .admin-main { padding: 1.5rem; }
+  .admin-stat-grid { grid-template-columns: 1fr; }
+}

@@ -463,6 +463,20 @@ footer.site-footer {
 .status-page h1 { margin: 1rem 0 1rem; }
 .status-page p { color: var(--text-muted); margin-bottom: 2rem; max-width: 480px; }
 
+/* --- SITE NOTIFICATION BANNER (injected by js/main.js, no HTML edit needed) --- */
+.site-notification {
+  position: relative; z-index: 1100; padding: 0.85rem 5%; text-align: center; font-size: 0.92rem; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap;
+}
+.site-notification.info { background: var(--navy-dark); color: var(--white); }
+.site-notification.success { background: #1E7A34; color: var(--white); }
+.site-notification.warning { background: #C98A16; color: var(--white); }
+.site-notification a { text-decoration: underline; color: inherit; }
+.site-notification .site-notification-close {
+  background: none; border: none; color: inherit; opacity: 0.75; cursor: pointer; font-size: 1.1rem; line-height: 1; padding: 0;
+}
+.site-notification .site-notification-close:hover { opacity: 1; }
+
 /* --- UTILITIES --- */
 .mt-0 { margin-top: 0 !important; }
 .text-center { text-align: center; }

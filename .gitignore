@@ -1,0 +1,7 @@
+# Local database file (SQLite) — never commit real site data.
+/data/*.sqlite
+/data/*.sqlite-journal
+
+# If a real MySQL password is ever added here directly (not recommended —
+# use a secrets file outside public_html instead), don't let it slip into git.
+# includes/config.php stays tracked since it ships with placeholder values only.

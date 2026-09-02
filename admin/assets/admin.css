@@ -39,6 +39,26 @@ body.admin-body { background: var(--bg-offwhite); }
 .ga4-metric-card.active { border-color: var(--navy-dark); border-width: 2px; box-shadow: var(--shadow-hover); }
 .ga4-metric-card.active .num { color: var(--navy-light); }
 
+/* Shown briefly while a date-range change/reload is in flight */
+.ga4-loading-overlay {
+  position: fixed; inset: 0; z-index: 2000;
+  background: rgba(248,250,252,0.85); backdrop-filter: blur(1px);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;
+}
+/* The [hidden] attribute is display:none in the browser's default
+   stylesheet, but that has the same specificity as the class rule
+   above and loses to it by being earlier in the cascade — without
+   this override the overlay would stay invisible-but-still-blocking
+   clicks even while "hidden". */
+.ga4-loading-overlay[hidden] { display: none; }
+.ga4-loading-overlay p { color: var(--text-muted); font-weight: 600; font-size: 0.9rem; }
+.ga4-spinner {
+  width: 42px; height: 42px; border-radius: 50%;
+  border: 4px solid var(--border-soft); border-top-color: var(--navy-dark);
+  animation: ga4-spin 0.7s linear infinite;
+}
+@keyframes ga4-spin { to { transform: rotate(360deg); } }
+
 .admin-card { background: var(--white); border-radius: var(--radius-card); padding: 2rem; box-shadow: var(--shadow-subtle); border: 1px solid var(--border-soft); }
 
 table.admin-table { width: 100%; border-collapse: collapse; background: var(--white); border-radius: var(--radius-card); overflow: hidden; box-shadow: var(--shadow-subtle); }

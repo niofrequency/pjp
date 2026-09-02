@@ -49,8 +49,13 @@ require __DIR__ . '/partials/header.php';
   </div>
 </div>
 
+<div id="ga4LoadingOverlay" class="ga4-loading-overlay" hidden>
+  <div class="ga4-spinner"></div>
+  <p>Loading analytics&hellip;</p>
+</div>
+
 <?php if (ga4_enabled()): ?>
-  <form method="GET" class="admin-card" style="display:flex; gap:1rem; align-items:flex-end; flex-wrap:wrap; margin-bottom:2rem;">
+  <form method="GET" id="ga4DateForm" class="admin-card" style="display:flex; gap:1rem; align-items:flex-end; flex-wrap:wrap; margin-bottom:2rem;">
     <div class="field" style="margin-bottom:0;">
       <label for="start">From</label>
       <input type="date" id="start" name="start" value="<?= h($start) ?>" max="<?= h($today) ?>" style="width:auto; padding:0.7rem 1rem; border-radius:12px; border:1.5px solid var(--border-soft); font-family:inherit;">
@@ -61,12 +66,27 @@ require __DIR__ . '/partials/header.php';
     </div>
     <button type="submit" class="btn btn-primary">Update</button>
     <div class="admin-table-actions" style="margin-left:auto;">
-      <a href="analytics.php?start=<?= h(date('Y-m-d', strtotime('-6 days'))) ?>&amp;end=<?= h($today) ?>" class="btn btn-outline btn-sm">Last 7 days</a>
-      <a href="analytics.php?start=<?= h(date('Y-m-d', strtotime('-27 days'))) ?>&amp;end=<?= h($today) ?>" class="btn btn-outline btn-sm">Last 28 days</a>
-      <a href="analytics.php?start=<?= h(date('Y-m-01')) ?>&amp;end=<?= h($today) ?>" class="btn btn-outline btn-sm">This month</a>
-      <a href="analytics.php?start=<?= h(date('Y-m-d', strtotime('-89 days'))) ?>&amp;end=<?= h($today) ?>" class="btn btn-outline btn-sm">Last 90 days</a>
+      <a href="analytics.php?start=<?= h(date('Y-m-d', strtotime('-6 days'))) ?>&amp;end=<?= h($today) ?>" class="btn btn-outline btn-sm ga4-quick-range">Last 7 days</a>
+      <a href="analytics.php?start=<?= h(date('Y-m-d', strtotime('-27 days'))) ?>&amp;end=<?= h($today) ?>" class="btn btn-outline btn-sm ga4-quick-range">Last 28 days</a>
+      <a href="analytics.php?start=<?= h(date('Y-m-01')) ?>&amp;end=<?= h($today) ?>" class="btn btn-outline btn-sm ga4-quick-range">This month</a>
+      <a href="analytics.php?start=<?= h(date('Y-m-d', strtotime('-89 days'))) ?>&amp;end=<?= h($today) ?>" class="btn btn-outline btn-sm ga4-quick-range">Last 90 days</a>
     </div>
   </form>
+  <script>
+    (function () {
+      var overlay = document.getElementById('ga4LoadingOverlay');
+      var form = document.getElementById('ga4DateForm');
+      function showLoading() { overlay.hidden = false; }
+      if (form) form.addEventListener('submit', showLoading);
+      document.querySelectorAll('.ga4-quick-range').forEach(function (a) {
+        a.addEventListener('click', showLoading);
+      });
+      // Browsers can restore the previous page from cache (bfcache) when
+      // navigating back here — make sure a stuck-visible overlay doesn't
+      // persist onto that restored view.
+      window.addEventListener('pageshow', function () { overlay.hidden = true; });
+    })();
+  </script>
 <?php endif; ?>
 
 <?php if ($summary): ?>

@@ -272,7 +272,9 @@ nav.main-nav.scrolled { box-shadow: 0 4px 20px rgba(15, 41, 66, 0.08); }
 
 /* --- STATS / FACTS --- */
 .stats {
-  background: var(--navy-dark);
+  background-image: linear-gradient(rgba(15,41,66,0.82), rgba(15,41,66,0.82)), url('/img/industrial kitchen.jpeg');
+  background-size: cover;
+  background-position: center;
   color: var(--white);
   padding: 4.5rem 5%;
   display: grid;
@@ -407,7 +409,12 @@ nav.main-nav.scrolled { box-shadow: 0 4px 20px rgba(15, 41, 66, 0.08); }
 
 /* --- QUOTE / CTA SPLIT --- */
 .quote-split { display: grid; grid-template-columns: 1fr 1fr; }
-.quote-text { background: var(--navy-dark); color: var(--white); padding: 5rem 5%; display: flex; flex-direction: column; justify-content: center; }
+.quote-text {
+  background-image: linear-gradient(rgba(15,41,66,0.82), rgba(15,41,66,0.82)), url('/img/chef main.JPG');
+  background-size: cover;
+  background-position: center;
+  color: var(--white); padding: 5rem 5%; display: flex; flex-direction: column; justify-content: center;
+}
 .quote-text h2 { color: var(--white); font-size: 2.2rem; margin-bottom: 1.25rem; }
 .quote-text p { color: rgba(255,255,255,0.78); margin-bottom: 2rem; max-width: 460px; }
 .quote-form-wrap { background: var(--bg-offwhite); padding: 5rem 5%; display: flex; align-items: center; }

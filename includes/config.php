@@ -77,3 +77,35 @@ if (!defined('DB_HOST')) {
     define('DB_USER', 'your_cpanel_db_user');
     define('DB_PASS', 'your_cpanel_db_password');
 }
+
+/**
+ * --- Google Analytics 4 (optional) ---
+ * Lets the admin dashboard show live GA4 stats (active users, views,
+ * engaged sessions, event count, top pages) instead of you having to
+ * open analytics.google.com separately. Leave GA4_PROPERTY_ID blank to
+ * disable this — the admin pages hide the whole section if it's not
+ * configured, so there's nothing to break by not setting this up.
+ *
+ * One-time setup (all on Google's side, not this codebase):
+ *   1. https://console.cloud.google.com/ -> create or pick a project ->
+ *      "APIs & Services" -> Library -> enable "Google Analytics Data API".
+ *   2. Same project -> "APIs & Services" -> Credentials -> Create
+ *      Credentials -> Service Account. Give it any name, no roles needed.
+ *   3. Open that service account -> Keys -> Add Key -> Create new key ->
+ *      JSON. This downloads a .json file to your computer.
+ *   4. https://analytics.google.com/ -> Admin -> (your GA4 property) ->
+ *      Property Access Management -> "+" -> add the service account's
+ *      email (looks like xxxx@xxxx.iam.gserviceaccount.com, it's inside
+ *      the downloaded JSON as "client_email") with the Viewer role.
+ *   5. Still in GA4 Admin -> Property Settings -> copy the "PROPERTY ID"
+ *      (a plain number like 123456789 — NOT the "G-XXXXXXX" measurement
+ *      ID used in the site's tracking snippet).
+ *   6. Upload the downloaded JSON file to your server ONE LEVEL ABOVE
+ *      public_html (e.g. /home/YOURCPANELUSER/ga4-service-account.json)
+ *      via cPanel File Manager — never inside public_html, since
+ *      anything there is reachable by URL.
+ *   7. Set GA4_PROPERTY_ID below to the number from step 5. The file
+ *      path already points at the right place if you followed step 6.
+ */
+define('GA4_PROPERTY_ID', ''); // e.g. '123456789' — blank disables the feature
+define('GA4_SERVICE_ACCOUNT_PATH', dirname(__DIR__, 2) . '/ga4-service-account.json');

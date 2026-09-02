@@ -22,6 +22,7 @@ $flash = pjp_flash_get();
       <div class="admin-sidebar-brand"><img src="../img/icon/PJP logo.png" alt="PJP logo"> PT. PJP</div>
       <nav class="admin-nav-list">
         <a href="index.php" class="<?= $active_nav === 'dashboard' ? 'active' : '' ?>">Dashboard</a>
+        <a href="analytics.php" class="<?= $active_nav === 'analytics' ? 'active' : '' ?>">Analytics</a>
         <a href="messages.php" class="<?= $active_nav === 'messages' ? 'active' : '' ?>">Messages</a>
         <a href="subscribers.php" class="<?= $active_nav === 'subscribers' ? 'active' : '' ?>">Subscribers</a>
         <a href="posts.php" class="<?= $active_nav === 'posts' ? 'active' : '' ?>">Blog Posts</a>

@@ -325,6 +325,10 @@ nav.main-nav.scrolled { box-shadow: 0 4px 20px rgba(15, 41, 66, 0.08); }
 .cert-badge-wrap { width: 92px; margin-bottom: 1.5rem; }
 .cert-badge { width: 100%; height: auto; display: block; }
 
+/* Compact trust-badge strip (homepage "PJP Standard" section) */
+.cert-badge-row { display: flex; flex-wrap: wrap; gap: 1.25rem; margin: 0.5rem 0 1.75rem; }
+.cert-badge-row .cert-badge-wrap { width: 58px; margin-bottom: 0; }
+
 .card h3 { font-size: 1.3rem; margin-bottom: 0.75rem; }
 .card p { color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.98rem; }
 .card-link { font-weight: 700; color: var(--navy-dark); display: inline-flex; align-items: center; gap: 0.4rem; }

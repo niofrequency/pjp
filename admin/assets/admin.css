@@ -23,7 +23,7 @@ body.admin-body { background: var(--bg-offwhite); }
 .admin-view-site { display: block; text-align: center; margin-top: 0.9rem; font-size: 0.85rem; color: rgba(255,255,255,0.6); }
 .admin-view-site:hover { color: var(--white); }
 
-.admin-main { flex: 1; padding: 2.5rem 3rem; max-width: 1100px; }
+.admin-main { flex: 1; padding: 2.5rem 3rem; max-width: 1600px; }
 .admin-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
 .admin-header-row h1 { font-size: 1.75rem; margin: 0; }
 .admin-header-row p { color: var(--text-muted); margin: 0.3rem 0 0; }
@@ -79,11 +79,18 @@ body.admin-auth-page { min-height: 100vh; display: flex; align-items: center; ju
 
 @media (max-width: 900px) {
   .admin-shell { flex-direction: column; }
-  .admin-sidebar { width: 100%; height: auto; position: static; flex-direction: row; align-items: center; flex-wrap: wrap; }
-  .admin-sidebar-brand { margin-bottom: 0; margin-right: auto; }
-  .admin-nav-list { flex-direction: row; flex-wrap: wrap; }
-  .admin-sidebar-footer { border-top: none; margin-top: 0; padding-top: 0; display: flex; align-items: center; gap: 0.75rem; }
+  .admin-sidebar { width: 100%; height: auto; position: static; padding: 1.25rem; }
+  .admin-sidebar-brand { margin-bottom: 1rem; }
+  /* A 3-column grid instead of a wrapping row: every tab is the same size
+     and edge-to-edge, instead of wrapping unevenly next to the logo. */
+  .admin-nav-list { flex: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+  .admin-nav-list a { text-align: center; padding: 0.7rem 0.4rem; font-size: 0.85rem; }
+  .admin-sidebar-footer { border-top: 1px solid rgba(255,255,255,0.12); margin-top: 1.25rem; padding-top: 1.25rem; display: flex; align-items: center; gap: 0.75rem; }
   .admin-user { display: none; }
   .admin-main { padding: 1.5rem; }
   .admin-stat-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .admin-nav-list { grid-template-columns: repeat(2, 1fr); }
+  .admin-header-row { flex-direction: column; align-items: stretch; }
 }

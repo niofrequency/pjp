@@ -216,13 +216,18 @@ nav.main-nav.scrolled { box-shadow: 0 4px 20px rgba(15, 41, 66, 0.08); }
 .page-header {
   position: relative;
   padding: 9rem 5% 4rem;
-  background: var(--navy-dark);
+  background: linear-gradient(100deg, var(--navy-dark) 0%, var(--navy-dark) 45%, var(--navy-light) 70%, rgba(255,255,255,0.85) 100%);
   color: var(--white);
   overflow: hidden;
 }
 .page-header::before {
   content: ""; position: absolute; inset: 0;
-  background: radial-gradient(circle at 85% 20%, rgba(255,255,255,0.08), transparent 60%);
+  background: radial-gradient(circle at 85% 20%, rgba(255,255,255,0.12), transparent 55%);
+}
+.page-header::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 90px;
+  background: linear-gradient(to bottom, transparent, var(--white));
+  pointer-events: none;
 }
 .page-header .container { position: relative; z-index: 1; }
 .page-header h1 { color: var(--white); font-size: 2.6rem; margin-bottom: 0.75rem; }

@@ -19,6 +19,11 @@ try {
 if (!$post) {
     http_response_code(404);
 }
+
+// Each post carries its own image (set by the admin when writing it), so
+// the banner uses that for the right context per post, falling back to the
+// generic blog banner for posts without one.
+$headerImg = !empty($post['image']) ? '/' . ltrim($post['image'], '/') : '/img/gallerybanner-2.png';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -92,7 +97,7 @@ if (!$post) {
       </div>
     </div>
   <?php else: ?>
-    <header class="page-header" style="--page-header-img: url('/img/gallerybanner-2.png');">
+    <header class="page-header" style="--page-header-img: url('<?= h($headerImg) ?>');">
       <div class="container">
         <div class="breadcrumb"><a href="index.html">Home</a> / <a href="blog.php">Blog</a> / <span class="current"><?= h($post['title']) ?></span></div>
         <h1><?= h($post['title']) ?></h1>

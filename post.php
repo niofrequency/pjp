@@ -92,7 +92,7 @@ if (!$post) {
       </div>
     </div>
   <?php else: ?>
-    <header class="page-header">
+    <header class="page-header" style="--page-header-img: url('/img/gallerybanner-2.png');">
       <div class="container">
         <div class="breadcrumb"><a href="index.html">Home</a> / <a href="blog.php">Blog</a> / <span class="current"><?= h($post['title']) ?></span></div>
         <h1><?= h($post['title']) ?></h1>

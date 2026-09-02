@@ -101,7 +101,7 @@ $archive = [
 
   <div id="contact-popup"><a href="tel:+629013261088" aria-label="Call PJP"><i>📞</i></a></div>
 
-  <header class="page-header">
+  <header class="page-header" style="--page-header-img: url('/img/gallerybanner-2.png');">
     <div class="container">
       <div class="breadcrumb"><a href="index.html">Home</a> / <span class="current">Blog</span></div>
       <h1>Blog</h1>

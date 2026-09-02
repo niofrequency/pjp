@@ -238,13 +238,17 @@ nav.main-nav.scrolled { box-shadow: 0 4px 20px rgba(15, 41, 66, 0.08); }
 .page-header {
   position: relative;
   padding: 9rem 5% 4rem;
-  background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy-light) 100%);
+  /* Per-page background photo, set inline via the --page-header-img custom
+     property (e.g. style="--page-header-img: url('img/buffet1.png');").
+     Pages that don't set it (blog listing without a natural photo, ISO
+     certifications) fall back to the plain navy diagonal. A flat dark
+     scrim sits on top either way so the white title/breadcrumb text stays
+     readable over any photo. */
+  background-image: linear-gradient(rgba(15,41,66,0.82), rgba(15,41,66,0.82)), var(--page-header-img, linear-gradient(135deg, var(--navy-dark) 0%, var(--navy-light) 100%));
+  background-size: cover;
+  background-position: center;
   color: var(--white);
   overflow: hidden;
-}
-.page-header::before {
-  content: ""; position: absolute; inset: 0;
-  background: radial-gradient(circle at 88% 15%, rgba(255,255,255,0.10), transparent 45%);
 }
 .page-header .container { position: relative; z-index: 1; }
 .page-header h1 { color: var(--white); font-size: 2.6rem; margin-bottom: 0.75rem; }
@@ -313,6 +317,12 @@ nav.main-nav.scrolled { box-shadow: 0 4px 20px rgba(15, 41, 66, 0.08); }
   display: flex; align-items: center; justify-content: center; margin-bottom: 1.75rem;
 }
 .card-icon svg { width: 26px; height: 26px; fill: var(--navy-dark); }
+
+/* Certification seal badges (ISO / Halal cards) — bigger and more detailed
+   than the plain .card-icon circle, since each one carries its own number. */
+.cert-badge-wrap { width: 92px; margin-bottom: 1.5rem; }
+.cert-badge { width: 100%; height: auto; display: block; }
+
 .card h3 { font-size: 1.3rem; margin-bottom: 0.75rem; }
 .card p { color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.98rem; }
 .card-link { font-weight: 700; color: var(--navy-dark); display: inline-flex; align-items: center; gap: 0.4rem; }

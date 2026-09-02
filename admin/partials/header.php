@@ -23,6 +23,7 @@ $flash = pjp_flash_get();
       <nav class="admin-nav-list">
         <a href="index.php" class="<?= $active_nav === 'dashboard' ? 'active' : '' ?>">Dashboard</a>
         <a href="messages.php" class="<?= $active_nav === 'messages' ? 'active' : '' ?>">Messages</a>
+        <a href="subscribers.php" class="<?= $active_nav === 'subscribers' ? 'active' : '' ?>">Subscribers</a>
         <a href="posts.php" class="<?= $active_nav === 'posts' ? 'active' : '' ?>">Blog Posts</a>
         <a href="notifications.php" class="<?= $active_nav === 'notifications' ? 'active' : '' ?>">Notifications</a>
       </nav>

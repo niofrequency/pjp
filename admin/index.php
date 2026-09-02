@@ -7,6 +7,7 @@ $db = pjp_db();
 $unread = (int) $db->query('SELECT COUNT(*) c FROM messages WHERE is_read = 0')->fetch()['c'];
 $totalMessages = (int) $db->query('SELECT COUNT(*) c FROM messages')->fetch()['c'];
 $totalPosts = (int) $db->query("SELECT COUNT(*) c FROM posts")->fetch()['c'];
+$totalSubscribers = (int) $db->query("SELECT COUNT(*) c FROM subscribers WHERE status = 'active'")->fetch()['c'];
 $now = pjp_now();
 $activeNotifs = (int) $db->prepare("SELECT COUNT(*) c FROM notifications WHERE active = 1 AND (start_at IS NULL OR start_at <= ?) AND (end_at IS NULL OR end_at >= ?)")
     ->execute([$now, $now]) ? $db->query("SELECT COUNT(*) c FROM notifications WHERE active = 1 AND (start_at IS NULL OR start_at <= '$now') AND (end_at IS NULL OR end_at >= '$now')")->fetch()['c'] : 0;
@@ -28,6 +29,10 @@ require __DIR__ . '/partials/header.php';
   <div class="admin-stat-card">
     <div class="num"><?= $unread ?></div>
     <div class="label">Unread Messages</div>
+  </div>
+  <div class="admin-stat-card">
+    <div class="num"><?= $totalSubscribers ?></div>
+    <div class="label">Newsletter Subscribers</div>
   </div>
   <div class="admin-stat-card">
     <div class="num"><?= $totalPosts ?></div>

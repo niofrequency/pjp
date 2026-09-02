@@ -124,7 +124,7 @@ if (!$post) {
         <p class="footer-tagline" style="color:#A3B5C9;font-weight:700;font-size:0.85rem;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:0.75rem;">Excellent Service for Excellent Customer</p>
         <p><em>"To be the big catering business company on a national scale, competitive, reliable in carrying out requests, desires and expectations to achieve customer satisfaction."</em></p>
         <div class="footer-newsletter">
-          <form action="newsletter.php" method="POST">
+          <form action="newsletter.php" method="POST" data-newsletter-form data-success-message="Thanks for subscribing! You will hear from us soon." data-sending-label="Signing up…">
             <input name="email" type="email" placeholder="Your email" required>
             <button type="submit">Sign Up</button>
           </form>

@@ -182,6 +182,8 @@ document.addEventListener('DOMContentLoaded', function () {
      gets an inline confirmation without leaving the page, and fall back to
      a normal form submission if the request fails for any reason. */
   function wireAjaxForm(form) {
+    var successMessage = form.getAttribute('data-success-message') || "Thanks — your message has been sent. We'll be in touch soon.";
+    var sendingLabel = form.getAttribute('data-sending-label') || 'Sending…';
     form.addEventListener('submit', function (e) {
       var action = form.getAttribute('action');
       if (!action) return; // no action set — let it no-op as before, nothing to do
@@ -189,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
       e.preventDefault();
       var submitBtn = form.querySelector('button[type="submit"]');
       var originalLabel = submitBtn ? submitBtn.textContent : '';
-      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending…'; }
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = sendingLabel; }
 
       var data = new FormData(form);
       data.append('source_page', window.location.pathname);
@@ -202,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(function (res) { return res.json().then(function (json) { return { ok: res.ok, json: json }; }); })
         .then(function (result) {
           if (result.ok && result.json && result.json.ok) {
-            showFormNotice(form, 'success', "Thanks — your message has been sent. We'll be in touch soon.");
+            showFormNotice(form, 'success', successMessage);
             form.reset();
           } else {
             showFormNotice(form, 'error', (result.json && result.json.error) || 'Something went wrong — please try again.');
@@ -235,7 +237,7 @@ document.addEventListener('DOMContentLoaded', function () {
     notice.textContent = text;
   }
 
-  document.querySelectorAll('[data-quote-form], [data-contact-form]').forEach(wireAjaxForm);
+  document.querySelectorAll('[data-quote-form], [data-contact-form], [data-newsletter-form]').forEach(wireAjaxForm);
 
   /* ---------- Site notification banner (fetched from api/notifications.php) ----------
      Injected at the very top of <body> — no per-page HTML changes needed.

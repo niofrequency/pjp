@@ -106,6 +106,14 @@ function pjp_migrate(PDO $pdo): void {
         active INTEGER NOT NULL DEFAULT 1,
         created_at $dt NOT NULL
     )$engine");
+
+    $pdo->exec("CREATE TABLE IF NOT EXISTS subscribers (
+        id $pk,
+        email VARCHAR(255) NOT NULL UNIQUE,
+        status VARCHAR(20) NOT NULL DEFAULT 'active',
+        source VARCHAR(100),
+        subscribed_at $dt NOT NULL
+    )$engine");
 }
 
 /** Current time as an ISO-8601-ish string that sorts/compares correctly in both drivers. */

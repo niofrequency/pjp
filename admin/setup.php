@@ -22,6 +22,7 @@ if (!$keyOk) {
       <meta charset="utf-8"><title>Setup Locked | PJP</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="robots" content="noindex">
+      <link href="../img/icon/PJP Favicon.ico" rel="icon">
       <link href="../css/design.css" rel="stylesheet">
       <link href="assets/admin.css" rel="stylesheet">
     </head>
@@ -69,6 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <title>Set Up Admin Account | PJP</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex">
+<link href="../img/icon/PJP Favicon.ico" rel="icon">
 <link href="../css/design.css" rel="stylesheet">
 <link href="assets/admin.css" rel="stylesheet">
 </head>

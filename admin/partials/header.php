@@ -13,6 +13,7 @@ $flash = pjp_flash_get();
 <title><?= h($page_title ?? 'Admin') ?> | PJP Admin</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
+<link href="../img/icon/PJP Favicon.ico" rel="icon">
 <link href="../css/design.css" rel="stylesheet">
 <link href="assets/admin.css" rel="stylesheet">
 </head>

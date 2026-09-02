@@ -33,6 +33,12 @@ body.admin-body { background: var(--bg-offwhite); }
 .admin-stat-card .num { font-size: 2.25rem; font-weight: 800; color: var(--navy-dark); }
 .admin-stat-card .label { color: var(--text-muted); font-weight: 600; font-size: 0.9rem; }
 
+/* Clickable stat cards that switch the analytics chart's metric */
+.ga4-metric-card { cursor: pointer; transition: border-color 0.15s ease, box-shadow 0.15s ease; }
+.ga4-metric-card:hover { border-color: var(--navy-light); }
+.ga4-metric-card.active { border-color: var(--navy-dark); border-width: 2px; box-shadow: var(--shadow-hover); }
+.ga4-metric-card.active .num { color: var(--navy-light); }
+
 .admin-card { background: var(--white); border-radius: var(--radius-card); padding: 2rem; box-shadow: var(--shadow-subtle); border: 1px solid var(--border-soft); }
 
 table.admin-table { width: 100%; border-collapse: collapse; background: var(--white); border-radius: var(--radius-card); overflow: hidden; box-shadow: var(--shadow-subtle); }

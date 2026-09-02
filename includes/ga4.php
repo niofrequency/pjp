@@ -95,7 +95,7 @@ function ga4_access_token(): ?string {
  * $metrics / $dimensions are GA4 API names, e.g. 'activeUsers', 'screenPageViews', 'pagePath'.
  * Returns the raw decoded JSON response, or null on failure.
  */
-function ga4_run_report(array $metrics, array $dimensions = [], string $startDate = '28daysAgo', string $endDate = 'today', int $limit = 10): ?array {
+function ga4_run_report(array $metrics, array $dimensions = [], string $startDate = '28daysAgo', string $endDate = 'today', int $limit = 10, bool $orderByMetric = true): ?array {
     $token = ga4_access_token();
     if (!$token) {
         return null;
@@ -108,10 +108,12 @@ function ga4_run_report(array $metrics, array $dimensions = [], string $startDat
     ];
     if ($dimensions) {
         $body['dimensions'] = array_map(fn($d) => ['name' => $d], $dimensions);
-        $body['orderBys'] = [[
-            'metric' => ['metricName' => $metrics[0]],
-            'desc' => true,
-        ]];
+        if ($orderByMetric) {
+            $body['orderBys'] = [[
+                'metric' => ['metricName' => $metrics[0]],
+                'desc' => true,
+            ]];
+        }
     }
 
     $ch = curl_init('https://analyticsdata.googleapis.com/v1beta/properties/' . GA4_PROPERTY_ID . ':runReport');
@@ -176,4 +178,73 @@ function ga4_dashboard_summary(): ?array {
 
     @file_put_contents($cacheFile, json_encode($summary));
     return $summary;
+}
+
+/**
+ * Totals + top pages for an arbitrary, admin-picked date range (used by
+ * the Analytics page's date filter). Not cached, since the whole point
+ * is picking a specific range on demand — GA4's own per-property quota
+ * is generous enough for occasional admin-driven lookups like this.
+ */
+function ga4_range_summary(string $startDate, string $endDate): ?array {
+    $totals = ga4_run_report(['activeUsers', 'screenPageViews', 'engagedSessions', 'eventCount'], [], $startDate, $endDate);
+    if (!$totals || empty($totals['rows'])) {
+        return null;
+    }
+    $v = $totals['rows'][0]['metricValues'] ?? [];
+
+    $topPagesRaw = ga4_run_report(['screenPageViews'], ['pagePath'], $startDate, $endDate, 8);
+    $topPages = [];
+    foreach ($topPagesRaw['rows'] ?? [] as $row) {
+        $topPages[] = [
+            'path' => $row['dimensionValues'][0]['value'] ?? '',
+            'views' => (int) ($row['metricValues'][0]['value'] ?? 0),
+        ];
+    }
+
+    return [
+        'activeUsers' => (int) ($v[0]['value'] ?? 0),
+        'views' => (int) ($v[1]['value'] ?? 0),
+        'engagedSessions' => (int) ($v[2]['value'] ?? 0),
+        'eventCount' => (int) ($v[3]['value'] ?? 0),
+        'topPages' => $topPages,
+    ];
+}
+
+/**
+ * Day-by-day values for the same four headline metrics over a date
+ * range, for the traffic chart. GA4 returns the 'date' dimension as
+ * 'YYYYMMDD' strings and doesn't guarantee row order, so this sorts
+ * chronologically before returning.
+ */
+function ga4_timeseries(string $startDate, string $endDate): ?array {
+    $report = ga4_run_report(
+        ['activeUsers', 'screenPageViews', 'engagedSessions', 'eventCount'],
+        ['date'],
+        $startDate,
+        $endDate,
+        1000,
+        false // keep natural/date order rather than sorting by metric value
+    );
+    if (!$report || empty($report['rows'])) {
+        return null;
+    }
+
+    $rows = [];
+    foreach ($report['rows'] as $row) {
+        $raw = $row['dimensionValues'][0]['value'] ?? ''; // 'YYYYMMDD'
+        if (strlen($raw) !== 8) {
+            continue;
+        }
+        $rows[] = [
+            'date' => $raw,
+            'label' => date('j M', strtotime($raw)),
+            'activeUsers' => (int) ($row['metricValues'][0]['value'] ?? 0),
+            'views' => (int) ($row['metricValues'][1]['value'] ?? 0),
+            'engagedSessions' => (int) ($row['metricValues'][2]['value'] ?? 0),
+            'eventCount' => (int) ($row['metricValues'][3]['value'] ?? 0),
+        ];
+    }
+    usort($rows, fn($a, $b) => strcmp($a['date'], $b['date']));
+    return $rows;
 }

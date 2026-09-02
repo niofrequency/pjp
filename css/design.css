@@ -223,8 +223,13 @@ nav.main-nav.scrolled { box-shadow: 0 4px 20px rgba(15, 41, 66, 0.08); }
      we drop the cross-fade (a hard cut between slides is fine at this
      size) and let the active slide sit in normal flow instead, so .hero
      grows to fit whatever the content actually needs. */
-  .hero { min-height: 50svh; }
-  .hero-slide { position: relative; opacity: 1; transition: none; display: none; }
+  /* .hero-slide and .hero-dots both become in-flow elements below (rather
+     than absolutely positioned), so .hero needs to stack them in a column
+     instead of its usual row — otherwise they sit side by side as flex
+     items, each shrink-wrapping its own content, leaving a chunk of bare
+     .hero background showing on the right where nothing fills the row. */
+  .hero { min-height: 50svh; flex-direction: column; align-items: stretch; }
+  .hero-slide { position: relative; opacity: 1; transition: none; display: none; width: 100%; }
   .hero-slide.active { display: flex; }
   .hero-content { padding: 6.5rem 6% 3rem; }
   .hero-content h1, .hero-content h2 { font-size: 1.9rem; }

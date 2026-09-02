@@ -54,20 +54,24 @@ if ($errors) {
     respond_error('Please fill in a valid name, email, and message.');
 }
 
-$stmt = pjp_db()->prepare(
-    'INSERT INTO messages (created_at, name, email, phone, subject, message, source_page, raw_data, is_read)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)'
-);
-$stmt->execute([
-    pjp_now(),
-    $name,
-    $email,
-    $phone,
-    $service,
-    $message,
-    $sourcePage,
-    json_encode($_POST, JSON_UNESCAPED_UNICODE),
-]);
+try {
+    $stmt = pjp_db()->prepare(
+        'INSERT INTO messages (created_at, name, email, phone, subject, message, source_page, raw_data, is_read)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)'
+    );
+    $stmt->execute([
+        pjp_now(),
+        $name,
+        $email,
+        $phone,
+        $service,
+        $message,
+        $sourcePage,
+        json_encode($_POST, JSON_UNESCAPED_UNICODE),
+    ]);
+} catch (Throwable $e) {
+    respond_error('Sorry, we could not save your message right now. Please try again shortly or email marketing@pjp.co.id directly.');
+}
 
 respond_success();
 

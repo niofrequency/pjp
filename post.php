@@ -3,14 +3,18 @@ require_once __DIR__ . '/includes/db.php';
 require_once __DIR__ . '/includes/helpers.php';
 
 $slug = trim((string) ($_GET['slug'] ?? ''));
-$now = pjp_now();
-
-$stmt = pjp_db()->prepare(
-    "SELECT * FROM posts WHERE slug = ? AND status = 'published'
-     AND (display_start IS NULL OR display_start <= ?) AND (display_end IS NULL OR display_end >= ?)"
-);
-$stmt->execute([$slug, $now, $now]);
-$post = $stmt->fetch();
+$post = null;
+try {
+    $now = pjp_now();
+    $stmt = pjp_db()->prepare(
+        "SELECT * FROM posts WHERE slug = ? AND status = 'published'
+         AND (display_start IS NULL OR display_start <= ?) AND (display_end IS NULL OR display_end >= ?)"
+    );
+    $stmt->execute([$slug, $now, $now]);
+    $post = $stmt->fetch();
+} catch (Throwable $e) {
+    $post = null;
+}
 
 if (!$post) {
     http_response_code(404);
@@ -43,7 +47,7 @@ if (!$post) {
   <div class="topbar">
     <div class="container-row">
       <div class="topbar-contact">
-        <a href="tel:+629013261089">☎ +62 901 326 1089</a>
+        <a href="tel:+629013261088">☎ +62 901 326 1088</a>
         <a href="mailto:marketing@pjp.co.id">✉ marketing@pjp.co.id</a>
       </div>
       <div class="topbar-links">
@@ -76,7 +80,7 @@ if (!$post) {
     </div>
   </nav>
 
-  <div id="contact-popup"><a href="tel:+629013261089" aria-label="Call PJP"><i>📞</i></a></div>
+  <div id="contact-popup"><a href="tel:+629013261088" aria-label="Call PJP"><i>📞</i></a></div>
 
   <?php if (!$post): ?>
     <div class="status-page">
@@ -117,6 +121,7 @@ if (!$post) {
     <div class="footer-grid">
       <div class="footer-brand">
         <span class="brand"><img src="img/icon/PJP logo.png" alt="PJP logo">Pengembangan Jaya Papua</span>
+        <p class="footer-tagline" style="color:#A3B5C9;font-weight:700;font-size:0.85rem;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:0.75rem;">Excellent Service for Excellent Customer</p>
         <p><em>"To be the big catering business company on a national scale, competitive, reliable in carrying out requests, desires and expectations to achieve customer satisfaction."</em></p>
         <div class="footer-newsletter">
           <form action="newsletter.php" method="POST">
@@ -127,8 +132,8 @@ if (!$post) {
       </div>
       <div class="footer-col">
         <h4>Get In Touch</h4>
-        <p>📍 Jl. Cendrawasih-SP3 Karang Senang, Distrik Kuala Kencana, Papua 99968</p>
-        <p>📞 +62 901 326 1089</p>
+        <p>📍 Jl. C. Heatubun No. 1, Timika, Papua Tengah 99910</p>
+        <p>📞 +62 901 326 1088</p>
         <p>✉️ marketing@pjp.co.id</p>
       </div>
       <div class="footer-col">

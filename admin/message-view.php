@@ -8,10 +8,25 @@ $id = (int) ($_GET['id'] ?? 0);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     pjp_check_csrf();
-    if (($_POST['action'] ?? '') === 'delete') {
+    $action = $_POST['action'] ?? '';
+    if ($action === 'delete') {
         $db->prepare('DELETE FROM messages WHERE id = ?')->execute([$id]);
         pjp_flash_set('success', 'Message deleted.');
         pjp_redirect('messages.php');
+    }
+    if ($action === 'toggle_read') {
+        $stmt = $db->prepare('SELECT is_read FROM messages WHERE id = ?');
+        $stmt->execute([$id]);
+        $row = $stmt->fetch();
+        $nowUnread = false;
+        if ($row) {
+            $nowUnread = (bool) $row['is_read']; // currently read -> toggling makes it unread
+            $db->prepare('UPDATE messages SET is_read = ? WHERE id = ?')->execute([$nowUnread ? 0 : 1, $id]);
+        }
+        // Viewing this page auto-marks a message read, which would instantly
+        // undo a "mark unread" toggle if we redirected back here — so send
+        // that case to the list instead, where it'll show as unread.
+        pjp_redirect($nowUnread ? 'messages.php' : 'message-view.php?id=' . $id);
     }
 }
 
@@ -26,6 +41,7 @@ if (!$m) {
 
 if (!$m['is_read']) {
     $db->prepare('UPDATE messages SET is_read = 1 WHERE id = ?')->execute([$id]);
+    $m['is_read'] = 1;
 }
 
 $raw = json_decode((string) $m['raw_data'], true) ?: [];
@@ -41,6 +57,12 @@ require __DIR__ . '/partials/header.php';
   </div>
   <div class="admin-table-actions">
     <a href="messages.php" class="btn btn-outline btn-sm">&larr; All Messages</a>
+    <form method="POST">
+      <?= pjp_csrf_field() ?>
+      <button type="submit" name="action" value="toggle_read" class="btn btn-outline btn-sm">
+        <?= $m['is_read'] ? 'Mark Unread' : 'Mark Read' ?>
+      </button>
+    </form>
     <form method="POST" onsubmit="return confirm('Delete this message permanently?');">
       <?= pjp_csrf_field() ?>
       <button type="submit" name="action" value="delete" class="btn btn-outline btn-sm">Delete</button>

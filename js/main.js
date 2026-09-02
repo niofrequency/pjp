@@ -175,32 +175,106 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  /* ---------- Quote / quick-quote form -> opens mail client ---------- */
-  document.querySelectorAll('[data-quote-form]').forEach(function (form) {
+  /* ---------- Quote form & contact form -> real submission to contact.php ----------
+     Progressive enhancement: the <form> already has action="contact.php"
+     method="POST" as a plain HTML fallback (works even with JS off). When
+     JS is available, we intercept submit, send it via fetch so the visitor
+     gets an inline confirmation without leaving the page, and fall back to
+     a normal form submission if the request fails for any reason. */
+  function wireAjaxForm(form) {
+    var successMessage = form.getAttribute('data-success-message') || "Thanks — your message has been sent. We'll be in touch soon.";
+    var sendingLabel = form.getAttribute('data-sending-label') || 'Sending…';
     form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var data = new FormData(form);
-      var lines = [];
-      data.forEach(function (value, key) { lines.push(key + ': ' + value); });
-      var mailto = 'mailto:marketing@pjp.co.id?subject=' + encodeURIComponent('New Quote Request') +
-        '&body=' + encodeURIComponent(lines.join('\n'));
-      window.location.href = mailto;
-    });
-  });
+      var action = form.getAttribute('action');
+      if (!action) return; // no action set — let it no-op as before, nothing to do
 
-  /* ---------- Contact page form -> opens mail client ---------- */
-  document.querySelectorAll('[data-contact-form]').forEach(function (form) {
-    form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var name = form.querySelector('[name="name"]');
-      var email = form.querySelector('[name="email"]');
-      var subject = form.querySelector('[name="subject"]');
-      var message = form.querySelector('[name="message"]');
-      var body = 'Name: ' + (name ? name.value : '') + '\nEmail: ' + (email ? email.value : '') + '\n\n' + (message ? message.value : '');
-      var mailto = 'mailto:marketing@pjp.co.id?subject=' + encodeURIComponent(subject ? subject.value : 'Website Contact') +
-        '&body=' + encodeURIComponent(body);
-      window.location.href = mailto;
+      var submitBtn = form.querySelector('button[type="submit"]');
+      var originalLabel = submitBtn ? submitBtn.textContent : '';
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = sendingLabel; }
+
+      var data = new FormData(form);
+      data.append('source_page', window.location.pathname);
+
+      fetch(action, {
+        method: 'POST',
+        body: data,
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+      })
+        .then(function (res) { return res.json().then(function (json) { return { ok: res.ok, json: json }; }); })
+        .then(function (result) {
+          if (result.ok && result.json && result.json.ok) {
+            showFormNotice(form, 'success', successMessage);
+            form.reset();
+          } else {
+            showFormNotice(form, 'error', (result.json && result.json.error) || 'Something went wrong — please try again.');
+          }
+        })
+        .catch(function () {
+          // Network/JS failure: fall back to a real, non-AJAX submission.
+          form.submit();
+        })
+        .finally(function () {
+          if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = originalLabel; }
+        });
     });
-  });
+  }
+
+  function showFormNotice(form, type, text) {
+    var notice = form.querySelector('.form-notice');
+    if (!notice) {
+      notice = document.createElement('div');
+      notice.className = 'form-notice';
+      notice.style.marginTop = '1rem';
+      notice.style.padding = '0.85rem 1.1rem';
+      notice.style.borderRadius = '12px';
+      notice.style.fontSize = '0.9rem';
+      notice.style.fontWeight = '600';
+      form.appendChild(notice);
+    }
+    notice.style.background = type === 'success' ? '#DFF5E1' : '#FCE4E4';
+    notice.style.color = type === 'success' ? '#1E7A34' : '#A32626';
+    notice.textContent = text;
+  }
+
+  document.querySelectorAll('[data-quote-form], [data-contact-form], [data-newsletter-form]').forEach(wireAjaxForm);
+
+  /* ---------- Site notification banner (fetched from api/notifications.php) ----------
+     Injected at the very top of <body> — no per-page HTML changes needed.
+     Dismissing it hides that specific notification (by id) for this visitor
+     until it changes, remembered in localStorage. */
+  (function loadSiteNotification() {
+    fetch('/api/notifications.php', { headers: { 'Accept': 'application/json' } })
+      .then(function (res) { return res.ok ? res.json() : null; })
+      .then(function (notif) {
+        if (!notif || !notif.id) return;
+        var dismissedId = null;
+        try { dismissedId = localStorage.getItem('pjp_dismissed_notification'); } catch (e) {}
+        if (dismissedId && String(dismissedId) === String(notif.id)) return;
+
+        var bar = document.createElement('div');
+        bar.className = 'site-notification ' + (notif.style || 'info');
+        var text = document.createElement('span');
+        text.textContent = notif.message;
+        bar.appendChild(text);
+        if (notif.link_url) {
+          var link = document.createElement('a');
+          link.href = notif.link_url;
+          link.textContent = notif.link_text || 'Learn more';
+          bar.appendChild(link);
+        }
+        var close = document.createElement('button');
+        close.className = 'site-notification-close';
+        close.setAttribute('aria-label', 'Dismiss');
+        close.innerHTML = '&times;';
+        close.addEventListener('click', function () {
+          bar.remove();
+          try { localStorage.setItem('pjp_dismissed_notification', String(notif.id)); } catch (e) {}
+        });
+        bar.appendChild(close);
+        document.body.insertBefore(bar, document.body.firstChild);
+      })
+      .catch(function () { /* silently ignore — banner is a non-essential enhancement */ });
+  })();
 
 });

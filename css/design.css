@@ -66,14 +66,12 @@ button { font-family: inherit; }
   margin-bottom: 1.25rem;
 }
 
-/* --- IMAGES: cool, immaculate tone --- */
+/* --- IMAGES: true-to-life color --- */
 .img-premium {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: grayscale(15%) saturate(92%) hue-rotate(190deg) contrast(1.03) brightness(1.02);
 }
-/* subtler variant for photo-accurate contexts (galleries, staff, food) */
 .img-natural {
   width: 100%;
   height: 100%;
@@ -182,6 +180,7 @@ nav.main-nav.scrolled { box-shadow: 0 4px 20px rgba(15, 41, 66, 0.08); }
 .hero {
   position: relative;
   min-height: 88vh;
+  min-height: 88svh; /* accounts for mobile browser toolbars so content isn't hidden behind them on load */
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -191,10 +190,9 @@ nav.main-nav.scrolled { box-shadow: 0 4px 20px rgba(15, 41, 66, 0.08); }
   position: absolute; inset: 0; opacity: 0; transition: opacity 1s ease;
   display: flex; align-items: center;
 }
-.hero-slide.active { opacity: 1; position: relative; }
+.hero-slide.active { opacity: 1; z-index: 1; }
 .hero-slide img {
   position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
-  filter: grayscale(20%) saturate(85%) hue-rotate(195deg) brightness(0.55) contrast(1.05);
 }
 .hero-slide::after {
   content: ""; position: absolute; inset: 0;
@@ -202,7 +200,7 @@ nav.main-nav.scrolled { box-shadow: 0 4px 20px rgba(15, 41, 66, 0.08); }
 }
 .hero-content { position: relative; z-index: 2; max-width: 680px; padding: 8rem 5% 6rem; color: var(--white); }
 .hero-content .eyebrow { background: rgba(255,255,255,0.12); color: var(--white); }
-.hero-content h1 { font-size: 3.4rem; color: var(--white); margin-bottom: 1.5rem; }
+.hero-content h1, .hero-content h2 { font-size: 3.4rem; color: var(--white); margin-bottom: 1.5rem; }
 .hero-content p { font-size: 1.2rem; color: rgba(255,255,255,0.82); margin-bottom: 2.5rem; max-width: 92%; }
 .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
 
@@ -211,21 +209,51 @@ nav.main-nav.scrolled { box-shadow: 0 4px 20px rgba(15, 41, 66, 0.08); }
 .hero-dots button.active { background: var(--white); }
 
 @media (max-width: 768px) {
-  .hero { min-height: 70vh; }
-  .hero-content h1 { font-size: 2.3rem; }
+  .hero { min-height: 70vh; min-height: 70svh; }
+  .hero-content { padding: 6rem 6% 4rem; }
+  .hero-content h1, .hero-content h2 { font-size: 2.3rem; }
+  .hero-content p { max-width: 100%; }
+}
+@media (max-width: 480px) {
+  /* Slides normally stack absolutely (inset:0) so they can cross-fade — but
+     that pins their height to .hero's, which is otherwise fixed by
+     min-height alone and has no in-flow content to grow from. With a
+     longer heading/paragraph plus stacked full-width buttons, that fixed
+     height clips the bottom of the content on small phones. Below 480px
+     we drop the cross-fade (a hard cut between slides is fine at this
+     size) and let the active slide sit in normal flow instead, so .hero
+     grows to fit whatever the content actually needs. */
+  /* .hero-slide and .hero-dots both become in-flow elements below (rather
+     than absolutely positioned), so .hero needs to stack them in a column
+     instead of its usual row — otherwise they sit side by side as flex
+     items, each shrink-wrapping its own content, leaving a chunk of bare
+     .hero background showing on the right where nothing fills the row. */
+  .hero { min-height: 50svh; flex-direction: column; align-items: stretch; }
+  .hero-slide { position: relative; opacity: 1; transition: none; display: none; width: 100%; }
+  .hero-slide.active { display: flex; }
+  .hero-content { padding: 6.5rem 6% 3rem; }
+  .hero-content h1, .hero-content h2 { font-size: 1.9rem; }
+  .hero-content p { font-size: 1.05rem; }
+  .hero-actions { flex-direction: column; align-items: stretch; }
+  .hero-actions .btn { width: 100%; }
+  .hero-dots { position: static; margin-top: 1.5rem; padding: 0 6% 2.5rem; }
 }
 
 /* --- PAGE HEADER (interior pages) --- */
 .page-header {
   position: relative;
   padding: 9rem 5% 4rem;
-  background: var(--navy-dark);
+  /* Per-page background photo, set inline via the --page-header-img custom
+     property (e.g. style="--page-header-img: url('img/buffet1.png');").
+     Pages that don't set it (blog listing without a natural photo, ISO
+     certifications) fall back to the plain navy diagonal. A flat dark
+     scrim sits on top either way so the white title/breadcrumb text stays
+     readable over any photo. */
+  background-image: linear-gradient(rgba(15,41,66,0.82), rgba(15,41,66,0.82)), var(--page-header-img, linear-gradient(135deg, var(--navy-dark) 0%, var(--navy-light) 100%));
+  background-size: cover;
+  background-position: center;
   color: var(--white);
   overflow: hidden;
-}
-.page-header::before {
-  content: ""; position: absolute; inset: 0;
-  background: radial-gradient(circle at 85% 20%, rgba(255,255,255,0.08), transparent 60%);
 }
 .page-header .container { position: relative; z-index: 1; }
 .page-header h1 { color: var(--white); font-size: 2.6rem; margin-bottom: 0.75rem; }
@@ -233,15 +261,25 @@ nav.main-nav.scrolled { box-shadow: 0 4px 20px rgba(15, 41, 66, 0.08); }
 .breadcrumb a { color: rgba(255,255,255,0.7); }
 .breadcrumb a:hover { color: var(--white); }
 .breadcrumb .current { color: var(--white); font-weight: 600; }
+@media (max-width: 768px) { .page-header { padding: 7rem 6% 3rem; } }
+@media (max-width: 480px) {
+  .page-header { padding: 6.5rem 6% 2.5rem; }
+  .page-header h1 { font-size: 1.9rem; }
+  .breadcrumb { font-size: 0.85rem; flex-wrap: wrap; }
+}
 
 /* --- STATEMENT --- */
 .statement { padding: 6rem 5%; text-align: center; max-width: 900px; margin: 0 auto; }
 .statement h2 { font-size: 2.4rem; font-weight: 500; line-height: 1.4; }
 .statement h2 span { font-weight: 800; }
+@media (max-width: 768px) { .statement { padding: 3.5rem 6%; } .statement h2 { font-size: 1.9rem; } }
+@media (max-width: 480px) { .statement h2 { font-size: 1.6rem; } }
 
 /* --- STATS / FACTS --- */
 .stats {
-  background: var(--navy-dark);
+  background-image: linear-gradient(rgba(15,41,66,0.82), rgba(15,41,66,0.82)), url('/img/industrial kitchen.jpeg');
+  background-size: cover;
+  background-position: center;
   color: var(--white);
   padding: 4.5rem 5%;
   display: grid;
@@ -251,12 +289,18 @@ nav.main-nav.scrolled { box-shadow: 0 4px 20px rgba(15, 41, 66, 0.08); }
 }
 .stats .stat-num { font-size: 2.75rem; font-weight: 800; color: var(--white); }
 .stats .stat-label { color: #A3B5C9; font-weight: 600; font-size: 0.95rem; margin-top: 0.25rem; }
-@media (max-width: 768px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 768px) { .stats { grid-template-columns: repeat(2, 1fr); padding: 3.5rem 5%; gap: 2rem 1rem; } }
+@media (max-width: 480px) { .stats .stat-num { font-size: 2.1rem; } .stats .stat-label { font-size: 0.82rem; } }
 
 /* --- SECTION HEADERS --- */
 .section-header { text-align: center; margin-bottom: 3.5rem; max-width: 700px; margin-left: auto; margin-right: auto; }
 .section-header h2 { font-size: 2.3rem; margin-bottom: 0.85rem; }
 .section-header p { color: var(--text-muted); font-size: 1.05rem; }
+@media (max-width: 480px) {
+  .section-header { margin-bottom: 2.25rem; }
+  .section-header h2 { font-size: 1.7rem; }
+  .section-header p { font-size: 0.95rem; }
+}
 
 /* --- GRID / CARDS --- */
 .grid { display: grid; gap: 2.25rem; }
@@ -280,6 +324,16 @@ nav.main-nav.scrolled { box-shadow: 0 4px 20px rgba(15, 41, 66, 0.08); }
   display: flex; align-items: center; justify-content: center; margin-bottom: 1.75rem;
 }
 .card-icon svg { width: 26px; height: 26px; fill: var(--navy-dark); }
+
+/* Certification seal badges (ISO / Halal cards) — bigger and more detailed
+   than the plain .card-icon circle, since each one carries its own number. */
+.cert-badge-wrap { width: 92px; margin-bottom: 1.5rem; }
+.cert-badge { width: 100%; height: auto; display: block; }
+
+/* Compact trust-badge strip (homepage "PJP Standard" section) */
+.cert-badge-row { display: flex; flex-wrap: wrap; gap: 1.25rem; margin: 0.5rem 0 1.75rem; }
+.cert-badge-row .cert-badge-wrap { width: 58px; margin-bottom: 0; }
+
 .card h3 { font-size: 1.3rem; margin-bottom: 0.75rem; }
 .card p { color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.98rem; }
 .card-link { font-weight: 700; color: var(--navy-dark); display: inline-flex; align-items: center; gap: 0.4rem; }
@@ -304,10 +358,24 @@ nav.main-nav.scrolled { box-shadow: 0 4px 20px rgba(15, 41, 66, 0.08); }
 .gallery-images .img-wrap { border-radius: var(--radius-card); overflow: hidden; box-shadow: var(--shadow-subtle); }
 .img-wrap-tall { height: 380px; }
 .img-wrap-short { height: 280px; margin-top: 90px; }
+
+/* Single full photo instead of the tall/short split — no cropping, shows
+   the whole image at its natural ratio (used on the homepage). */
+.gallery-image-single { border-radius: var(--radius-card); overflow: hidden; box-shadow: var(--shadow-subtle); }
+.gallery-image-single img { width: 100%; height: auto; display: block; }
+
 .gallery-text h2 { font-size: 2.5rem; margin-bottom: 1.25rem; }
 .gallery-text p { color: var(--text-muted); margin-bottom: 1.5rem; }
 @media (max-width: 1024px) { .gallery-split { grid-template-columns: 1fr; } .img-wrap-short { margin-top: 0; } }
-@media (max-width: 640px) { .gallery-images { grid-template-columns: 1fr; } }
+@media (max-width: 768px) { .gallery-section { padding: 4rem 6%; } }
+@media (max-width: 640px) {
+  .gallery-images { grid-template-columns: 1fr; }
+  .img-wrap-tall, .img-wrap-short { height: 260px; }
+}
+@media (max-width: 480px) {
+  .gallery-text h2 { font-size: 1.8rem; }
+  .img-wrap-tall, .img-wrap-short { height: 220px; }
+}
 
 /* --- PHOTO GRID (galleries.html) --- */
 .photo-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
@@ -350,15 +418,28 @@ nav.main-nav.scrolled { box-shadow: 0 4px 20px rgba(15, 41, 66, 0.08); }
 .client-card h3 { font-size: 1.1rem; margin-bottom: 0.2rem; }
 .client-card .tag { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--navy-light); letter-spacing: 0.04em; }
 .client-card p { color: var(--text-muted); font-size: 0.92rem; margin-top: 0.5rem; }
+@media (max-width: 420px) {
+  .client-card { flex-direction: column; text-align: center; align-items: center; padding: 1.5rem; }
+}
 
 /* --- QUOTE / CTA SPLIT --- */
 .quote-split { display: grid; grid-template-columns: 1fr 1fr; }
-.quote-text { background: var(--navy-dark); color: var(--white); padding: 5rem 5%; display: flex; flex-direction: column; justify-content: center; }
+.quote-text {
+  background-image: linear-gradient(rgba(15,41,66,0.82), rgba(15,41,66,0.82)), url('/img/chef main.JPG');
+  background-size: cover;
+  background-position: center;
+  color: var(--white); padding: 5rem 5%; display: flex; flex-direction: column; justify-content: center;
+}
 .quote-text h2 { color: var(--white); font-size: 2.2rem; margin-bottom: 1.25rem; }
 .quote-text p { color: rgba(255,255,255,0.78); margin-bottom: 2rem; max-width: 460px; }
 .quote-form-wrap { background: var(--bg-offwhite); padding: 5rem 5%; display: flex; align-items: center; }
 .quote-form { background: var(--white); border-radius: var(--radius-card); padding: 2.5rem; box-shadow: var(--shadow-subtle); width: 100%; }
 @media (max-width: 900px) { .quote-split { grid-template-columns: 1fr; } }
+@media (max-width: 768px) {
+  .quote-text, .quote-form-wrap { padding: 3.5rem 6%; }
+  .quote-text h2 { font-size: 1.9rem; }
+}
+@media (max-width: 480px) { .quote-form { padding: 1.75rem; } }
 
 /* --- FORMS --- */
 .field { margin-bottom: 1.25rem; }
@@ -376,6 +457,10 @@ nav.main-nav.scrolled { box-shadow: 0 4px 20px rgba(15, 41, 66, 0.08); }
 .content-block h2 { font-size: 2rem; margin: 2.5rem 0 1rem; }
 .content-block h2:first-child { margin-top: 0; }
 .content-block p { color: var(--text-muted); margin-bottom: 1.25rem; font-size: 1.05rem; }
+@media (max-width: 480px) {
+  .content-block h2 { font-size: 1.5rem; margin: 2rem 0 0.85rem; }
+  .content-block p { font-size: 0.98rem; }
+}
 .content-block ul { margin: 0 0 1.5rem 0; }
 .content-block ul li { color: var(--text-muted); padding-left: 1.6rem; position: relative; margin-bottom: 0.75rem; }
 .content-block ul li::before { content: "\2022"; color: var(--navy-light); font-weight: 800; position: absolute; left: 0.3rem; }
@@ -454,17 +539,45 @@ footer.site-footer {
 .footer-bottom .links { display: flex; gap: 1.5rem; }
 
 @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 600px) { .footer-grid { grid-template-columns: 1fr; } }
+@media (max-width: 768px) {
+  footer.site-footer { padding: 3.5rem 6% 1.5rem; border-top-left-radius: 24px; border-top-right-radius: 24px; }
+}
+@media (max-width: 600px) {
+  .footer-grid { grid-template-columns: 1fr; gap: 2.25rem; }
+  .footer-bottom { flex-direction: column; text-align: center; justify-content: center; }
+  .footer-bottom .links { justify-content: center; }
+}
 
 /* --- MAP EMBED --- */
 .map-wrap { border-radius: var(--radius-card); overflow: hidden; box-shadow: var(--shadow-subtle); min-height: 420px; }
 .map-wrap iframe { width: 100%; height: 100%; min-height: 420px; border: 0; display: block; }
+@media (max-width: 480px) {
+  .map-wrap, .map-wrap iframe { min-height: 280px; }
+}
 
 /* --- 404 / SUCCESS PAGES --- */
 .status-page { min-height: 70vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 8rem 5%; }
 .status-page .code { font-size: 6rem; font-weight: 800; color: var(--navy-light); line-height: 1; }
 .status-page h1 { margin: 1rem 0 1rem; }
 .status-page p { color: var(--text-muted); margin-bottom: 2rem; max-width: 480px; }
+@media (max-width: 480px) {
+  .status-page { padding: 5rem 6%; }
+  .status-page .code { font-size: 4rem; }
+}
+
+/* --- SITE NOTIFICATION BANNER (injected by js/main.js, no HTML edit needed) --- */
+.site-notification {
+  position: relative; z-index: 1100; padding: 0.85rem 5%; text-align: center; font-size: 0.92rem; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap;
+}
+.site-notification.info { background: var(--navy-dark); color: var(--white); }
+.site-notification.success { background: #1E7A34; color: var(--white); }
+.site-notification.warning { background: #C98A16; color: var(--white); }
+.site-notification a { text-decoration: underline; color: inherit; }
+.site-notification .site-notification-close {
+  background: none; border: none; color: inherit; opacity: 0.75; cursor: pointer; font-size: 1.1rem; line-height: 1; padding: 0;
+}
+.site-notification .site-notification-close:hover { opacity: 1; }
 
 /* --- UTILITIES --- */
 .mt-0 { margin-top: 0 !important; }
